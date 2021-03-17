@@ -10,6 +10,11 @@ class Base
         }
 
         require 'templates/header.php';
+        if (file_exists($file)) {
+            echo '<style>';
+            include "template/css/{$page}.css";
+            echo '</style>';
+        }
         require "templates/{$page}.php";
         require 'templates/footer.php';
         exit;
