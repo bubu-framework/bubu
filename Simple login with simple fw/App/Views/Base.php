@@ -10,7 +10,7 @@ class Base
         }
 
         require 'templates/header.php';
-        if (file_exists($file)) {
+        if (file_exists("template/css/{$page}.css")) {
             echo '<style>';
             include "template/css/{$page}.css";
             echo '</style>';
