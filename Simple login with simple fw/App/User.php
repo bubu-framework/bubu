@@ -60,7 +60,7 @@ class User extends Database
         }
     }
 
-    private function setConnexion(string $username, string $password)
+    private function setConnexion(string $username, string $password, bool $keepSession = false)
     {
         $request = self::getRequest(
             'SELECT *
@@ -78,6 +78,9 @@ class User extends Database
             return 'Mot de passe incorrect';
         } else {
             $this->globalAccountInformation = $request;
+            if ($keepSession) {
+                session_set_cookie_params($_ENV['SESSION_DURATION']*60*60*24);
+            }
             return true;
         }
     }

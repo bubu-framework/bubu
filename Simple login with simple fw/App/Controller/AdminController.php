@@ -3,7 +3,7 @@ namespace App\Controller;
 
 use App\Views\Base;
 
-class Admin
+class AdminController
 {
     public static function create()
     {

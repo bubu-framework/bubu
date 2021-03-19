@@ -4,7 +4,7 @@ namespace App\Controller;
 use App\User;
 use App\Views\Base;
 
-class Signup
+class SignupController
 {
     public static function create()
     {

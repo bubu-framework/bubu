@@ -4,7 +4,7 @@ namespace App\Controller;
 use App\User;
 use App\Views\Base;
 
-class Login
+class LoginController
 {
     public static function create()
     {
@@ -23,7 +23,7 @@ class Login
             Base::show('error', 403, 'Vous n\'êtes pas autorisé à rentrer sur cette page.');
         } else {
             $user = new User();
-            $return = $user->getConnexion($_POST['username'], $_POST['password']);
+            $return = $user->getConnexion($_POST['username'], $_POST['password'], isset($_POST['keepConnexion']));
             if ($return === true) {
                 $_SESSION['authorize']['level2'] = true;
                 if ($user->getInformation('type') == 2) {

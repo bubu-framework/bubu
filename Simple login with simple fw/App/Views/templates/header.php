@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/general.css" />
     <link rel="stylesheet" href="css/reset.css" />
-    <title>FrameWork</title>
+    <?php if (file_exists("css/{$page}.css")) echo "<link rel=\"stylesheet\" href=\"css/{$page}.css\" />"; ?>
+    <title><?= $_ENV['APP_NAME'] ?></title>
 </head>
 <body>
     <header>

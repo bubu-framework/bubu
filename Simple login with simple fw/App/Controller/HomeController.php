@@ -3,7 +3,7 @@ namespace App\Controller;
 
 use App\Views\Base;
 
-class Home
+class HomeController
 {
     public static function create()
     {

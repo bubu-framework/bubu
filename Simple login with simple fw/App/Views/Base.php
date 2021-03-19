@@ -10,13 +10,13 @@ class Base
         }
 
         require 'templates/header.php';
-        if (file_exists("template/css/{$page}.css")) {
-            echo '<style>';
-            include "template/css/{$page}.css";
-            echo '</style>';
-        }
         require "templates/{$page}.php";
         require 'templates/footer.php';
         exit;
+    }
+
+    public static function css(string $link): string
+    {
+        return "templates/css/{$link}";
     }
 }
