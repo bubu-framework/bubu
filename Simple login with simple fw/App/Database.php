@@ -17,11 +17,11 @@ class Database
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $pdo;
         } catch (Exception $e) {
-            echo 'Exception reçue : ' . $e->getMessage() . "\n";
+            die('Erreur: ' . $e->getMessage());
         }
     }
 
-    private static function request($request, $values, $type)
+    private static function request(string $request, array $values, ?string $type): ?array
     {
         try {
             $request = self::setPDO()->prepare($request);
@@ -30,15 +30,13 @@ class Database
                 return $request->fetchAll(PDO::FETCH_ASSOC);
             } elseif ($type === 'fetch') {
                 return $request->fetch();
-            } else {
-                return $request;
             }
         } catch (Exception $e) {
             die('Erreur: ' . $e->getMessage());
         }
     }
 
-    public static function getRequest($request, $values, $type = '')
+    public static function getRequest(string $request, array $values, ?string $type = ''): ?array
     {
         return self::request($request, $values, $type);
     }
