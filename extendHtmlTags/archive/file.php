@@ -1,7 +1,3 @@
-<?php
-$var = "d";
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,10 +10,5 @@ $var = "d";
     <p>Hello</p>
     +css('link')
     <p>World!</p>
-    +css('o')
-    <a href="">e</a>
-    ||var||
-    <?= $var ?>
-    +js('app')
 </body>
 </html>
