@@ -85,7 +85,7 @@ class User extends Database
         }
     }
 
-    public function getNewAccount(string $username, string $mail,string $password, string $passwordConfirm)
+    public function getNewAccount(string $username, string $mail, string $password, string $passwordConfirm)
     {
         return $this->setNewAccount($username, $mail, $password, $passwordConfirm);
     }
