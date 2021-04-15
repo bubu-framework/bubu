@@ -6,7 +6,10 @@ use Exception;
 
 class Database
 {
-    private static function setPDO()
+    /**
+     * @return PDO $pdo
+     */
+    private static function setPDO(): PDO
     {
         try {
             $pdo = new PDO(
@@ -21,7 +24,14 @@ class Database
         }
     }
 
-    private static function request(string $request, array $values, ?string $type): ?array
+    /**
+     * @param string $request
+     * @param array $values
+     * @param string|null $type
+     * 
+     * @return array|void
+     */
+    private static function request(string $request, array $values, ?string $type)
     {
         try {
             $request = self::setPDO()->prepare($request);
@@ -36,7 +46,14 @@ class Database
         }
     }
 
-    public static function getRequest(string $request, array $values, ?string $type = ''): ?array
+    /**
+     * @param string $request
+     * @param array $values
+     * @param string|null $type
+     * 
+     * @return array|void
+     */
+    public static function getRequest(string $request, array $values, ?string $type = null)
     {
         return self::request($request, $values, $type);
     }

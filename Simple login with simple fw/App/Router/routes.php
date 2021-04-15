@@ -1,10 +1,7 @@
 <?php
 namespace App\Router;
 
-use App\Views\Base;
-
 $router = new Router($_GET['url']);
-$router->get('css/:file', function ($file) { Base::css($file); });
 
 $router->get('/', 'Home#create');
 $router->get('/logout', 'Home#logout');

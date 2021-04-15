@@ -1,16 +1,16 @@
 <?php
 namespace App\Controller;
 
-use App\Views\Base;
+use App\Views\Page;
 
 class HomeController
 {
     public static function create()
     {
         if (!$_SESSION['authorize']['level1']) {
-            Base::show('error', 403, 'Vous n\'êtes pas autorisé à rentrer sur cette page.');
+            (new Page)->show('error', 403, 'Vous n\'êtes pas autorisé à rentrer sur cette page.');
         } else {
-            Base::show('home');
+            (new Page)->show('home');
         }
     }
 

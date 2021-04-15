@@ -2,7 +2,7 @@
 namespace App\Controller;
 
 use App\User;
-use App\Views\Base;
+use App\Views\Page;
 
 class LoginController
 {
@@ -11,16 +11,16 @@ class LoginController
         if ($_SESSION['authorize']['level2']) {
             header('Location: /challenges');
         } elseif (!$_SESSION['authorize']['level1']) {
-            Base::show('error', 403, 'Vous n\'êtes pas autorisé à rentrer sur cette page.');
+            (new Page)->show('error', 403, 'Vous n\'êtes pas autorisé à rentrer sur cette page.');
         } else {
-            Base::show('login');
+            (new Page)->show('login');
         }
     }
 
     public static function store()
     {
         if (!$_SESSION['authorize']['level1']) {
-            Base::show('error', 403, 'Vous n\'êtes pas autorisé à rentrer sur cette page.');
+            (new Page)->show('error', 403, 'Vous n\'êtes pas autorisé à rentrer sur cette page.');
         } else {
             $user = new User();
             $return = $user->getConnexion($_POST['username'], $_POST['password'], isset($_POST['keepConnexion']));
@@ -33,7 +33,7 @@ class LoginController
                 header('Location: /challenges');
                 exit;
             } else {
-                Base::show('error', 457, $return);
+                (new Page)->show('error', 457, $return);
             }
         }
     }

@@ -5,6 +5,15 @@ class User extends Database
 {
     protected $globalAccountInformation;
 
+    /**
+     * @param string $username
+     * @param string $mail
+     * @param string $password
+     * @param string $passwordConfirm
+     * 
+     * @return bool|string
+     */
+
     private function setNewAccount(string $username, string $mail, string $password, string $passwordConfirm)
     {
         $accountNumber =
@@ -20,7 +29,7 @@ class User extends Database
         if (
             count($accountNumber) !== 0
         ) {
-            return 'Nom d\'utilisateur déjà existant! ';
+            return 'Nom d\'utilisateur déjà existant!';
         } elseif (
             $password !== $passwordConfirm
         ) {
@@ -48,7 +57,7 @@ class User extends Database
                     )',
                     [
                         'username' => $username,
-                        'password' => password_hash($password, PASSWORD_ARGON2ID),
+                        'password' => password_hash($password, $_ENV['HASH_ALGO']),
                         'mail' => $mail,
                     ]
                 )
@@ -60,6 +69,13 @@ class User extends Database
         }
     }
 
+    /**
+     * @param string $username
+     * @param string $password
+     * @param bool $keepSession
+     * 
+     * @return bool|string
+     */
     private function setConnexion(string $username, string $password, bool $keepSession = false)
     {
         $request = self::getRequest(
@@ -85,27 +101,55 @@ class User extends Database
         }
     }
 
+    /**
+     * @param string $username
+     * @param string $mail
+     * @param string $password
+     * @param string $passwordConfirm
+     * 
+     * @return bool|string
+     */
     public function getNewAccount(string $username, string $mail, string $password, string $passwordConfirm)
     {
         return $this->setNewAccount($username, $mail, $password, $passwordConfirm);
     }
 
+    /**
+     * @param string $username
+     * @param string $password
+     * @param bool $keepSession
+     * 
+     * @return bool|string
+     */
     public function getConnexion(string $username, string $password)
     {
         return $this->setConnexion($username, $password);
     }
 
-    public function getInformation(string $info)
+    /**
+     * @param string $info
+     * 
+     * @return mixed
+     */
+    public function getInformation(string $info): mixed
     {
         return $this->globalAccountInformation[$info];
     }
 
+    /**
+     * @return array
+     */
     public function getAllInformation(): array
     {
         return $this->globalAccountInformation;
     }
 
-    public function setInformation($informations)
+    /**
+     * @param array $informations
+     * 
+     * @return void
+     */
+    public function setInformation(array $informations): void
     {
         foreach ($informations['globalAccountInformation'] as $key => $value) {
             $this->globalAccountInformation[$key] = $value;
