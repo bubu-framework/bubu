@@ -13,7 +13,6 @@ class User extends Database
      * 
      * @return bool|string
      */
-
     private function setNewAccount(string $username, string $mail, string $password, string $passwordConfirm)
     {
         $accountNumber =
@@ -29,20 +28,20 @@ class User extends Database
         if (
             count($accountNumber) !== 0
         ) {
-            return 'Nom d\'utilisateur déjà existant!';
+            return $GLOBALS['lang']['existing-username'];
         } elseif (
             $password !== $passwordConfirm
         ) {
-            return 'Les mots de passe ne correspondent pas!';
+            return $GLOBALS['lang']['not-same-password'];
         } elseif (
             strlen($password) < 10
             || strlen($password) > 30
         ) {
-            return 'Saisissez un mot de passe entre 10 et 30 caractères!';
+            return $GLOBALS['lang']['password-length'];
         } elseif (
             strlen($username) <= 3
         ) {
-            return 'Votre identifiant doit contenir au moins 3 caractères inclus!';
+            return $GLOBALS['lang']['username-length'];
         } else {
             if (
                 self::getRequest(
@@ -64,7 +63,7 @@ class User extends Database
             ) {
                 return true;
             } else {
-                return 'Une erreur s\'est produite!';
+                return $GLOBALS['lang']['undefined-error'];
             }
         }
     }
@@ -89,9 +88,9 @@ class User extends Database
         );
 
         if (!$request) {
-            return 'Compte introuvable';
+            return $GLOBALS['lang']['account-not-found'];
         } elseif (!password_verify($password, $request['password'])) {
-            return 'Mot de passe incorrect';
+            return $GLOBALS['lang']['incorrect-password'];
         } else {
             $this->globalAccountInformation = $request;
             if ($keepSession) {

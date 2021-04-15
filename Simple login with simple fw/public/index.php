@@ -20,6 +20,8 @@ $dotenv = Dotenv\Dotenv::create($repository, '../');
 $dotenv->load();
 $dotenv->required(['DB_USERNAME', 'DB_PASSWORD', 'DB_NAME', 'DB_HOST', 'DB_PORT']);
 
+$GLOBALS['lang'] = json_decode(file_get_contents("../lang/{$_ENV['LANG']}.json"), true);
+
 require '../App/Router/routes.php';
 
 /* WARNING Code non executé après l'appel à la route */

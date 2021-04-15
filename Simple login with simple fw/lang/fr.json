@@ -1,0 +1,10 @@
+{
+    "error": "Erreur",
+    "existing-username": "Nom d'utilisateur déjà existant!",
+    "not-same-password": "Les mots de passe ne correspondent pas!",
+    "password-length": "Saisissez un mot de passe entre 10 et 30 caractères!",
+    "username-length": "Votre identifiant doit contenir au moins 3 caractères inclus!",
+    "undefined-error": "Une erreur s'est produite!",
+    "account-not-found": "Compte introuvable!",
+    "incorrect-password": "Mot de passe incorrect!"
+}
