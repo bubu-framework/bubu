@@ -39,32 +39,30 @@ class User extends Database
         ) {
             return $GLOBALS['lang']['password-length'];
         } elseif (
-            strlen($username) <= 3
+            strlen($username) < 3
         ) {
             return $GLOBALS['lang']['username-length'];
         } else {
-            if (
-                self::getRequest(
-                    'INSERT INTO `users` (
-                        `username`,
-                        `password`,
-                        `mail`
-                    ) VALUES (
-                        :username,
-                        :password,
-                        :mail
-                    )',
-                    [
-                        'username' => $username,
-                        'password' => password_hash($password, $_ENV['HASH_ALGO']),
-                        'mail' => $mail,
-                    ]
-                )
-            ) {
-                return true;
-            } else {
-                return $GLOBALS['lang']['undefined-error'];
-            }
+            self::getRequest(
+                'INSERT INTO `users` (
+                    `username`,
+                    `password`,
+                    `mail`,
+                    `token`
+                ) VALUES (
+                    :username,
+                    :password,
+                    :mail,
+                    :token
+                )',
+                [
+                    'username' => $username,
+                    'password' => password_hash($password, constant($_ENV['HASH_ALGO'])),
+                    'mail' => $mail,
+                    'token' => bin2hex((new \OAuthProvider)->generateToken(128))
+                ]
+            );
+            return true;
         }
     }
 
@@ -78,7 +76,7 @@ class User extends Database
     private function setConnexion(string $username, string $password, bool $keepSession = false)
     {
         $request = self::getRequest(
-            'SELECT *
+            'SELECT `username`, `password`
             FROM `users`
             WHERE `username` = :username',
             [
@@ -87,7 +85,7 @@ class User extends Database
             'fetch'
         );
 
-        if (!$request) {
+        if (count($request) === 0) {
             return $GLOBALS['lang']['account-not-found'];
         } elseif (!password_verify($password, $request['password'])) {
             return $GLOBALS['lang']['incorrect-password'];
