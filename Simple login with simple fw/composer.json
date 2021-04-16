@@ -1,6 +1,7 @@
 {
     "require": {
-        "vlucas/phpdotenv": "^5.3"
+        "vlucas/phpdotenv": "^5.3",
+        "phpmailer/phpmailer": "^6.4"
     },
     "autoload": {
         "psr-4" : {"App\\" : "App"}
