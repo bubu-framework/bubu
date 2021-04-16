@@ -20,7 +20,15 @@ $dotenv = Dotenv\Dotenv::create($repository, '../');
 $dotenv->load();
 $dotenv->required(['DB_USERNAME', 'DB_PASSWORD', 'DB_NAME', 'DB_HOST', 'DB_PORT']);
 
-$GLOBALS['lang'] = json_decode(file_get_contents("../lang/{$_ENV['LANG']}.json"), true);
+if ($_ENV['LANG'] === 'auto') {
+    $lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+    $acceptLang = explode(',', $_ENV['SUPPORTED_LANGUAGES']); 
+    $lang = in_array($lang, $acceptLang) ? $lang : 'fr';
+} else {
+    $lang = $_ENV['LANG'];
+}
+
+$GLOBALS['lang'] = json_decode(file_get_contents("../lang/{$lang}.json"), true);
 
 require '../App/Router/routes.php';
 

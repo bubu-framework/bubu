@@ -8,7 +8,7 @@ class AdminController
     public static function create()
     {
         if (!$_SESSION['authorize']['level3']) {
-            (new Page)->show('error', 403, 'Vous n\'êtes pas autorisé à rentrer sur cette page.');
+            (new Page)->show('error', 403, $GLOBALS['lang']['unauthorize']);
         } else {
             (new Page)->show('admin');
         }
@@ -17,7 +17,7 @@ class AdminController
     public static function store()
     {
         if (!$_SESSION['authorize']['level3']) {
-            (new Page)->show('error', 403, 'Vous n\'êtes pas autorisé à rentrer sur cette page.');
+            (new Page)->show('error', 403, $GLOBALS['lang']['unauthorize']);
         }
     }
 }

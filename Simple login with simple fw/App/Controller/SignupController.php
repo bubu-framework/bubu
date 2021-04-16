@@ -9,7 +9,7 @@ class SignupController
     public static function create()
     {
         if (!$_SESSION['authorize']['level1']) {
-            (new Page)->show('error', 403, 'Vous n\'êtes pas autorisé à rentrer sur cette page.');
+            (new Page)->show('error', 403, $GLOBALS['lang']['unauthorize']);
         } elseif ($_SESSION['authorize']['level2']) {
             header('Location: /home');
             exit;
@@ -21,7 +21,7 @@ class SignupController
     public static function store()
     {
         if (!$_SESSION['authorize']['level1']) {
-            (new Page)->show('error', 403, 'Vous n\'êtes pas autorisé à rentrer sur cette page.');
+            (new Page)->show('error', 403, $GLOBALS['lang']['unauthorize']);
         } else {
             $user = new User();
             $return = $user->getNewAccount($_POST['username'], $_POST['mail'], $_POST['password'], $_POST['passwordConfirm']);

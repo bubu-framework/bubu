@@ -6,5 +6,6 @@
     "username-length": "Your username should be contains minimum 3 characters!",
     "undefined-error": "An error has occurred!",
     "account-not-found": "Account not found!",
-    "incorrect-password": "Incorrect password!"
+    "incorrect-password": "Incorrect password!",
+    "unauthorize": "Access forbidden!"
 }
