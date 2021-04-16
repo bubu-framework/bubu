@@ -1,5 +1,10 @@
 # Guide
 
+## Requirements
+
+- Require php ^7.4
+- Require OAuth extension
+
 ## Error code
 
 457: Username or password invalid
@@ -31,7 +36,6 @@ You can change prefix setting in [ExtendHtmlTags](App/ExtendHtmlTags/ExtendHtmlT
 - ### picture
 
         `+picture('file name with extension')`
-
 
 ### incluable forlder
 
