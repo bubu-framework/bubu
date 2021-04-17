@@ -21,6 +21,7 @@ class ExtendHtmlTags
     public static function create(Page $page): Page
     {
         $page = self::include($page);
+        $page = self::variable($page);
         $page = self::tags($page);
         return $page;
     }
@@ -36,6 +37,23 @@ class ExtendHtmlTags
             "/(\\" . self::$prefix . "include\('([^']+)'\))+/im",
             function ($match) {
                 return file_get_contents($_ENV['INCLUABLE'] . $match[2] . '.bubu.php');
+            },
+            $page->pageContent
+        );
+        return $page;
+    }
+
+    /**
+     * @param Page $page
+     * 
+     * @return Page
+     */
+    private static function variable(Page $page): Page
+    {
+        $page->pageContent = preg_replace_callback(
+            "/(\+\|{2}(.+)\|{2})+/m",
+            function($match) {
+                return "<?= htmlspecialchars($match[2]) ?>";
             },
             $page->pageContent
         );
