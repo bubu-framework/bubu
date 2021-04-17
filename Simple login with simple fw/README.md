@@ -5,6 +5,10 @@
 - Require php ^7.4
 - Require OAuth extension
 
+## Note
+
+For limite recursive call, incluable files can't include other incluable file.
+
 ## Error code
 
 457: Username or password invalid
