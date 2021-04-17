@@ -21,7 +21,7 @@ class ExtendHtmlTags
     public static function create(Page $page): Page
     {
         $page = self::include($page);
-        $page = self::variable($page);
+        //$page = self::variable($page);
         $page = self::tags($page);
         return $page;
     }
