@@ -33,13 +33,16 @@ class ExtendHtmlTags
      */
     private static function include(Page $page): Page
     {
-        $page->pageContent = preg_replace_callback(
-            "/(\\" . self::$prefix . "include\('([^']+)'\))+/im",
-            function ($match) {
-                return file_get_contents($_ENV['INCLUABLE'] . $match[2] . '.bubu.php');
-            },
-            $page->pageContent
-        );
+        $regex = "/(\\" . self::$prefix . "include\('([^']+)'\))+/im";
+        while (preg_match_all($regex, $page->pageContent)) {
+            $page->pageContent = preg_replace_callback(
+                $regex,
+                function ($match) {
+                    return file_get_contents($_ENV['INCLUABLE'] . $match[2] . '.bubu.php');
+                },
+                $page->pageContent
+            );
+        }
         return $page;
     }
 
