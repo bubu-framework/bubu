@@ -11,6 +11,8 @@ class Page
      * @param string $page
      * @param int|null $code
      * @param string|null $message
+     * 
+     * @return never
      */
     public function show(string $page, ?int $code = null, ?string $message = '')
     {
@@ -18,9 +20,10 @@ class Page
             http_response_code($code);
         }
 
+        $this->pageContent = file_get_contents("templates/{$page}.bubu.php", true);
+        $this->pageContent = ExtendHtmlTags::create($this)->pageContent;
         ob_start();
-        require "templates/{$page}.bubu.php";
-        $page = $this->pageContent = ob_get_clean();
-        exit(ExtendHtmlTags::create($this)->pageContent);
+        echo eval('?>' . $this->pageContent);
+        exit(ob_get_clean());
     }
 }

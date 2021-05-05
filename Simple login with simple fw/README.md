@@ -41,6 +41,12 @@ You can change prefix setting in [ExtendHtmlTags](App/ExtendHtmlTags/ExtendHtmlT
 
         `+picture('file name with extension')`
 
-### incluable forlder
+- ### include variable
 
-The incluable folder has not access security, so, don't put sensitives data!
+        `+||var||` for echo variable with `htmlspecialchars`
+
+        `+|!var!|` for echo variable without `htmlspecialchars`
+
+- ### incluable forlder
+
+        The incluable folder has not access security, so, don't put sensitives data!

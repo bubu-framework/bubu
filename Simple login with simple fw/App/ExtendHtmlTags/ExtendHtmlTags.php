@@ -21,7 +21,7 @@ class ExtendHtmlTags
     public static function create(Page $page): Page
     {
         $page = self::include($page);
-        //$page = self::variable($page);
+        $page = self::variable($page);
         $page = self::tags($page);
         return $page;
     }
@@ -54,9 +54,16 @@ class ExtendHtmlTags
     private static function variable(Page $page): Page
     {
         $page->pageContent = preg_replace_callback(
-            "/(\+\|{2}(.+)\|{2})+/m",
+            "/(\\" . self::$prefix ."\|{2}(.+)\|{2})+/m",
             function($match) {
-                return "<?= htmlspecialchars($match[2]) ?>";
+                return "<?= htmlspecialchars($$match[2]) ?>";
+            },
+            $page->pageContent
+        );
+        $page->pageContent = preg_replace_callback(
+            "/(\\" . self::$prefix ."\|\!(.+)\!\|)+/m",
+            function($match) {
+                return "<?= $$match[2] ?>";
             },
             $page->pageContent
         );

@@ -1,3 +1,7 @@
+<?php
+$a = '<code>df</code>';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +14,8 @@
 <body>
 
 +include('header')
-
++||a||
++|!a!|
 <main>
     <p>
         Hello
