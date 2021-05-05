@@ -8,7 +8,7 @@ if (!isset($_SESSION['load'])) {
         'load' => true,
         'username' => null,
         'authorize' => [
-            'level1' => true,
+            'level1' => false,
             'level2' => false,
             'level3' => false
         ]

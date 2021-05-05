@@ -5,13 +5,12 @@ use App\Views\Page;
 
 class HomeController
 {
+    /**
+     * @return never
+     */
     public static function create()
     {
-        if (!$_SESSION['authorize']['level1']) {
-            (new Page)->show('error', 403, $GLOBALS['lang']['unauthorize']);
-        } else {
-            (new Page)->show('home');
-        }
+        (new Page)->show('home');
     }
 
     public static function logout()
@@ -21,6 +20,6 @@ class HomeController
         session_unset();
         session_destroy();
         header('Location: /');
-        exit('Déconnecté');
+        exit($GLOBALS['lang']['disconnect']);
     }
 }

@@ -7,5 +7,6 @@
     "undefined-error": "Une erreur s'est produite!",
     "account-not-found": "Compte introuvable!",
     "incorrect-password": "Mot de passe incorrect!",
-    "unauthorize": "Vous n'êtes pas autorisé à accéder à cette page!"
+    "unauthorize": "Vous n'êtes pas autorisé à accéder à cette page!",
+    "disconnect": "Déconnecté!"
 }

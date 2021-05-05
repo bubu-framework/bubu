@@ -5,6 +5,9 @@ use App\Views\Page;
 
 class AdminController
 {
+    /**
+     * @return never
+     */
     public static function create()
     {
         if (!$_SESSION['authorize']['level3']) {

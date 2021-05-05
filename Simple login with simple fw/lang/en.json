@@ -7,5 +7,6 @@
     "undefined-error": "An error has occurred!",
     "account-not-found": "Account not found!",
     "incorrect-password": "Incorrect password!",
-    "unauthorize": "Access forbidden!"
+    "unauthorize": "Access forbidden!",
+    "disconnect": "Disconnect!"
 }

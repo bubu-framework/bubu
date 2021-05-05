@@ -6,6 +6,9 @@ use App\Views\Page;
 
 class SignupController
 {
+    /**
+     * @return never
+     */
     public static function create()
     {
         if (!$_SESSION['authorize']['level1']) {
