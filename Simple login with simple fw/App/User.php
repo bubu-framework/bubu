@@ -1,6 +1,8 @@
 <?php
 namespace App;
 
+use App\Database\Database;
+
 class User extends Database
 {
     protected $globalAccountInformation;
