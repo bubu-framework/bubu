@@ -4,12 +4,12 @@ namespace App\Database;
 use PDO;
 use Exception;
 
-class Database
+class Database extends DatabaseFactory
 {
     /**
      * @return PDO $pdo
      */
-    private static function setPDO(): PDO
+    protected static function setPDO(): PDO
     {
         try {
             $pdo = new PDO(
@@ -22,39 +22,5 @@ class Database
         } catch (Exception $e) {
             die('Erreur: ' . $e->getMessage());
         }
-    }
-
-    /**
-     * @param string $request
-     * @param array $values
-     * @param string|null $type
-     * 
-     * @return array|void
-     */
-    private static function request(string $request, array $values, ?string $type)
-    {
-        try {
-            $request = self::setPDO()->prepare($request);
-            $request->execute($values);
-            if ($type === 'fetchAll') {
-                return $request->fetchAll(PDO::FETCH_ASSOC);
-            } elseif ($type === 'fetch') {
-                return $request->fetch();
-            }
-        } catch (Exception $e) {
-            die('Erreur: ' . $e->getMessage());
-        }
-    }
-
-    /**
-     * @param string $request
-     * @param array $values
-     * @param string|null $type
-     * 
-     * @return array|void
-     */
-    public static function getRequest(string $request, array $values, ?string $type = null)
-    {
-        return self::request($request, $values, $type);
     }
 }

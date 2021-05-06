@@ -18,7 +18,7 @@ class User extends Database
     private function setNewAccount(string $username, string $mail, string $password, string $passwordConfirm)
     {
         $accountNumber =
-        self::getRequest(
+        self::request(
             'SELECT *
                 FROM `users`
                 WHERE `username` = :username',
@@ -45,7 +45,7 @@ class User extends Database
         ) {
             return $GLOBALS['lang']['username-length'];
         } else {
-            self::getRequest(
+            self::request(
                 'INSERT INTO `users` (
                     `username`,
                     `password`,
@@ -77,7 +77,7 @@ class User extends Database
      */
     private function setConnexion(string $username, string $password, bool $keepSession = false)
     {
-        $request = self::getRequest(
+        $request = self::request(
             'SELECT `username`, `password`
             FROM `users`
             WHERE `username` = :username',
