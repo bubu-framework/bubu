@@ -1,5 +1,4 @@
-*/vendor/*
-
+.env
+.gitignore
 .history/*
-*/.history/*
-*/*/.history/*
+vendor/*

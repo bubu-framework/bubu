@@ -26,8 +26,7 @@ $GLOBALS['lang'] = json_decode(file_get_contents("../lang/fr.json"), true);
 Database::createTable()
     ->name('Super')
     ->column(
-        Database::createColumn()
-            ->name('test')
+        Database::createColumn('test')
             ->type('int')
             ->size(15)
             ->notNull()
@@ -35,13 +34,11 @@ Database::createTable()
             ->comments('A simple comment')
             ->build()
     )->column(
-        Database::createColumn()
-            ->name('test2')
+        Database::createColumn('test2')
             ->type('int')
             ->build()
     )->column(
-        Database::createColumn()
-            ->name('abc')
+        Database::createColumn('abc')
             ->type('varchar')
             ->size(50)
             ->build()
@@ -56,4 +53,5 @@ Database::createTable()
             ]
         ]
     )
+    ->ifNotExists()
     ->build();

@@ -6,16 +6,20 @@ class DatabaseCreateTable extends Database
 {
 
     /**
+     * @var bool $ifNotExists Create table if not exists condition
      * @var string $name Table name
      * @var array $allColumn Contain all columns request
      * @var array $allIndex Contain all index request
      * @var string $collate Collate of table
+     * @var string $comments Comments of table
      * @var string $engine Engine of table
      */
+    private $ifNotExists = false;
     private $name;
     private $allColumn = [];
     private $allIndex = [];
     private $collate = 'utf8_general_ci';
+    private $comments;
     private $engine = 'InnoDB';
     private static $required = ['name'];
 
@@ -41,7 +45,13 @@ class DatabaseCreateTable extends Database
     public function __call($name, $arguments): DatabaseCreateTable
     {
         if (array_key_exists($name, get_class_vars(get_class($this)))) {
-            $this->{$name} = $arguments[0];
+            if (count($arguments) === 0) {
+                $this->{$name} = true;
+            } elseif (count($arguments) === 1) {
+                $this->{$name} = $arguments[0];
+            } else {
+                $this->{$name} = $arguments;
+            }
             return $this;
         } else {
             throw new DatabaseException('Property not found.');
@@ -75,11 +85,15 @@ class DatabaseCreateTable extends Database
         }
 
         $request =
-            "CREATE TABLE `{$this->name}` ("
+            ($this->ifNotExists ? '' : "DROP TABLE IF EXISTS {$this->name}; ")
+            .'CREATE TABLE'
+            . ($this->ifNotExists ? ' IF NOT EXISTS' : '')
+            ." `{$this->name}` ("
             . implode(',', $this->allColumn)
             . (!is_null($this->allIndex) ? ',' . implode(',', $this->allIndex) : '')
             . ')'
             . " COLLATE='{$this->collate}'"
+            . (!is_null($this->comments) ? " COMMENT '{$this->comments}'" : '')
             . " ENGINE={$this->engine}";
 
         Database::request($request, [], '');

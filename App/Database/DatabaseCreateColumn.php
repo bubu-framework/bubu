@@ -31,12 +31,18 @@ class DatabaseCreateColumn
 
     public $request;
 
+
+    public function __construct($name = null)
+    {
+        $this->name = $name;
+    }
+
     /**
      * @return DatabaseCreateColumn
      */
-    public static function createColumn(): DatabaseCreateColumn
+    public static function createColumn($name): DatabaseCreateColumn
     {
-        return new DatabaseCreateColumn;
+        return new DatabaseCreateColumn($name);
     }
 
     public function debug(): DatabaseCreateColumn
