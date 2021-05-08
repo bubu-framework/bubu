@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail;
+namespace Bubu\Mail;
 
 use PHPMailer\PHPMailer\PHPMailer;
 

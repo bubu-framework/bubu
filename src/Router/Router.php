@@ -1,5 +1,5 @@
 <?php
-namespace App\Router;
+namespace Bubu\Router;
 
 class Router
 {

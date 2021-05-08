@@ -1,6 +1,8 @@
 <?php
 namespace App\Views;
-use App\ExtendHtmlTags\ExtendHtmlTags;
+
+use Bubu\ExtendHtmlTags\ExtendHtmlTags;
+
 
 class Page
 {

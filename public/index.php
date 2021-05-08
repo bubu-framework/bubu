@@ -30,6 +30,6 @@ if ($_ENV['LANG'] === 'auto') {
 
 $GLOBALS['lang'] = json_decode(file_get_contents("../lang/{$lang}.json"), true);
 
-require '../App/Router/routes.php';
+require '../App/routes.php';
 
 /* WARNING Code non executé après l'appel à la route */

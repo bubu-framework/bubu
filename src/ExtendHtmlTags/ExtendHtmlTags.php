@@ -1,5 +1,5 @@
 <?php
-namespace App\ExtendHtmlTags;
+namespace Bubu\ExtendHtmlTags;
 
 use App\Views\Page;
 

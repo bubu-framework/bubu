@@ -1,5 +1,7 @@
 <?php
-namespace App\Router;
+namespace App;
+
+use Bubu\Router\Router;
 
 $router = new Router($_GET['url']);
 
