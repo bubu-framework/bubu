@@ -2,7 +2,7 @@
 
 namespace App\Database;
 
-class DatabaseCreateTable extends Database
+class DatabaseCreateTable
 {
 
     /**
@@ -23,9 +23,9 @@ class DatabaseCreateTable extends Database
     private $engine = 'InnoDB';
     private static $required = ['name'];
 
-    public static function createTable(): DatabaseCreateTable
+    public function __construct($name = null)
     {
-        return new DatabaseCreateTable;
+        $this->name = $name;
     }
 
     public function debug(): DatabaseCreateTable
@@ -68,7 +68,7 @@ class DatabaseCreateTable extends Database
     {
         $this->allIndex[] = 
             strtoupper($arguments['type'])
-            . ' INDEX '
+            . (strtoupper($arguments['type']) === 'PRIMARY' ? ' KEY ' : ' INDEX ')
             . "`{$arguments['name']}`"
             . ' (`'
             . implode('`,`', $arguments['column'])
@@ -76,7 +76,7 @@ class DatabaseCreateTable extends Database
         return $this;
     }
 
-    public function build()
+    private function make(): string
     {
         foreach (self::$required as $require) {
             if (is_null($this->{$require})) {
@@ -85,7 +85,7 @@ class DatabaseCreateTable extends Database
         }
 
         $request =
-            ($this->ifNotExists ? '' : "DROP TABLE IF EXISTS {$this->name}; ")
+            ($this->ifNotExists ? '' : "DROP TABLE IF EXISTS `{$this->name}`; ")
             .'CREATE TABLE'
             . ($this->ifNotExists ? ' IF NOT EXISTS' : '')
             ." `{$this->name}` ("
@@ -96,6 +96,19 @@ class DatabaseCreateTable extends Database
             . (!is_null($this->comments) ? " COMMENT '{$this->comments}'" : '')
             . " ENGINE={$this->engine}";
 
+            return $request;
+    }
+
+    public function simulate(): DatabaseCreateTable
+    {
+        $request = $this->make();
+        echo $request;
+        return $this;
+    }
+
+    public function build()
+    {
+        $request = $this->make();
         Database::request($request, [], '');
     }
 }

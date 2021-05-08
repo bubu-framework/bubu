@@ -5,7 +5,7 @@ namespace App\Database;
 use PDO;
 use Exception;
 
-class DatabaseRequest extends Database
+class DatabaseRequest
 {
     /**
      * @param string $request
@@ -17,7 +17,7 @@ class DatabaseRequest extends Database
     public static function request(string $request, array $values, ?string $type)
     {
         try {
-            $request = self::setPDO()->prepare($request);
+            $request = Database::setPDO()->prepare($request);
             $request->execute($values);
             if ($type === 'fetchAll') {
                 return $request->fetchAll(PDO::FETCH_ASSOC);

@@ -1,5 +1,5 @@
 <?php
-
+/*
 namespace App\Database;
 
 class DatabaseFactory
@@ -13,4 +13,4 @@ class DatabaseFactory
             throw new DatabaseException('Method not fond');
         }
     }
-}
+}*/

@@ -4,7 +4,7 @@ namespace App\Database;
 use PDO;
 use Exception;
 
-class Database extends DatabaseFactory
+class Database extends DatabaseRequest
 {
     /**
      * @return PDO $pdo
@@ -22,5 +22,23 @@ class Database extends DatabaseFactory
         } catch (Exception $e) {
             die('Erreur: ' . $e->getMessage());
         }
+    }
+
+    /**
+     * @param string $name
+     * @return DatabaseCreateColumn
+     */
+    public static function createColumn(string $name): DatabaseCreateColumn
+    {
+        return new DatabaseCreateColumn($name);
+    }
+
+    /**
+     * @param string $name
+     * @return DatabaseCreateTable
+     */
+    public static function createTable(string $name): DatabaseCreateTable
+    {
+        return new DatabaseCreateTable($name);
     }
 }

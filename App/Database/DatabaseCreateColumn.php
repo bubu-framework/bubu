@@ -37,14 +37,6 @@ class DatabaseCreateColumn
         $this->name = $name;
     }
 
-    /**
-     * @return DatabaseCreateColumn
-     */
-    public static function createColumn($name): DatabaseCreateColumn
-    {
-        return new DatabaseCreateColumn($name);
-    }
-
     public function debug(): DatabaseCreateColumn
     {
         var_dump(
@@ -56,6 +48,7 @@ class DatabaseCreateColumn
     }
 
     /**
+     * @method DatabaseCreateColumn unsigned(bool)
      * @return DatabaseCreateColumn
      * @throws DatabaseException
      */
@@ -97,7 +90,7 @@ class DatabaseCreateColumn
                     . ($this->auto_increment ? ' AUTO_INCREMENT' : '')
                     . (
                         !is_null($this->defaultValue)
-                        ? ' DEFAULT'
+                        ? ' DEFAULT' . 
                             (
                                 $this->defaultValue[1] === 'string'
                                 ? " '{$this->defaultValue[0]}'"
@@ -107,7 +100,7 @@ class DatabaseCreateColumn
 
 
                     . (!is_null($this->comments) ? " COMMENT '{$this->comments}'" : '')
-                    . (!is_null($this->collate) ? " COLLATE '{$this->comments}'" : '')
+                    . (!is_null($this->collate) ? " COLLATE '{$this->collate}'" : '')
                 );
         return $request;
     }
