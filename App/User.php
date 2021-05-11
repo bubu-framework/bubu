@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-use App\Database\Database;
+use Bubu\Database\Database;
 
 class User extends Database
 {
