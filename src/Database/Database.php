@@ -41,4 +41,13 @@ class Database extends DatabaseRequest
     {
         return new DatabaseCreateTable($name);
     }
+
+    /**
+     * @param string $table Table name
+     * @return DatabaseQueryBuilder
+     */
+    public static function queryBuilder(string $table): DatabaseQueryBuilder
+    {
+        return new DatabaseQueryBuilder($table);
+    }
 }
