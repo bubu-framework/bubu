@@ -1,7 +1,20 @@
 <?php
 
-namespace App\Database;
+namespace Bubu\Database;
 
+/**
+ * @method DatabaseCreateColumn type(string $type)
+ * @method DatabaseCreateColumn size(int $size)
+ * @method DatabaseCreateColumn unsigned(bool $unsigned)
+ * @method DatabaseCreateColumn zerofill(bool $zerofill)
+ * @method DatabaseCreateColumn notNull(bool $notNull)
+ * @method DatabaseCreateColumn auto_increment(bool $auto_increment)
+ * @method DatabaseCreateColumn defaultValue(array $defaultValue)
+ * @method DatabaseCreateColumn comments(string $commets)
+ * @method DatabaseCreateColumn collate(string $collate)
+ * @return DatabaseCreateColumn
+ * @throws DatabaseException
+ */
 class DatabaseCreateColumn
 {
 
@@ -13,17 +26,17 @@ class DatabaseCreateColumn
      * @var bool $zerofill If column should have ZEROFILL attribute
      * @var bool $notNull If column should have NOTNULL attribute
      * @var bool $auto_increment If column should have AUTO_INCREMENT attribute
-     * @var string|null $defaultValue If column have a default value
+     * @var array|null $defaultValue If column have a default value
      * @var string|null $comments Comments for column
      * @var string|null $collate If column should have a collate
      */
-    protected $name;
-    protected $type;
+    protected string $name;
+    protected string $type;
     protected $size;
-    protected $unsigned = false;
-    protected $zerofill = false;
-    protected $notNull = false;
-    protected $auto_increment = false;
+    protected bool $unsigned = false;
+    protected bool $zerofill = false;
+    protected bool $notNull = false;
+    protected bool $auto_increment = false;
     protected $defaultValue;
     protected $comments;
     protected $collate;
@@ -47,11 +60,6 @@ class DatabaseCreateColumn
         return $this;
     }
 
-    /**
-     * @method DatabaseCreateColumn unsigned(bool)
-     * @return DatabaseCreateColumn
-     * @throws DatabaseException
-     */
     public function __call($name, $arguments): DatabaseCreateColumn
     {
         if (array_key_exists($name, get_class_vars(get_class($this)))) {
@@ -69,7 +77,7 @@ class DatabaseCreateColumn
     }
 
     /**
-     * @return array Return all column query with the new
+     * @return array Return all column query with the new request
      */
     public function build(): array
     {

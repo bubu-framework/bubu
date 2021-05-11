@@ -1,5 +1,5 @@
 <?php
-namespace App\Database;
+namespace Bubu\Database;
 
 use PDO;
 use Exception;

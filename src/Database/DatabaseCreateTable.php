@@ -1,6 +1,13 @@
 <?php
 
-namespace App\Database;
+namespace Bubu\Database;
+
+/**
+ * @method DatabaseCreateTable ifNotExists(bool $ifNotExists)
+ * @method DatabaseCreateTable collate(string $collate)
+ * @method DatabaseCreateTable comments(string $comments)
+ * @method DatabaseCreateTable engine(string $engine)
+ */
 
 class DatabaseCreateTable
 {
@@ -14,14 +21,14 @@ class DatabaseCreateTable
      * @var string $comments Comments of table
      * @var string $engine Engine of table
      */
-    private $ifNotExists = false;
-    private $name;
-    private $allColumn = [];
-    private $allIndex = [];
-    private $collate = 'utf8_general_ci';
+    private bool $ifNotExists = false;
+    private string $name;
+    private array $allColumn = [];
+    private array $allIndex = [];
+    private string $collate = 'utf8_general_ci';
     private $comments;
-    private $engine = 'InnoDB';
-    private static $required = ['name'];
+    private string $engine = 'InnoDB';
+    private static array $required = ['name'];
 
     public function __construct($name = null)
     {
