@@ -77,16 +77,16 @@ class DatabaseCreateColumn
     }
 
     /**
-     * @return array Return all column query with the new request
+     * @return string Return query with the new request
      */
-    public function build(): array
+    public function __toString(): string
     {
         foreach (self::$required as $require) {
             if (is_null($this->{$require})) {
                 throw new DatabaseException('A variable required is null');
             }
         }
-        $request[] = 
+        $request = 
             trim(
                 "`{$this->name}`"
                     . ' '
