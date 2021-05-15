@@ -2,16 +2,19 @@
 
 namespace Bubu\Database;
 
-use \PDO;
-use \Exception;
-
 class DatabaseQueryBuilder extends Database
 {
+    use QueryMethods;
 
     /**
      * @var string $table Table name
+     * @var string $request
+     * @var array $params
      */
     protected string $table;
+    protected $request;
+    protected array $params = [];
+    protected static array $required = ['table'];
 
     /**
      * @param string $table Table name
@@ -19,28 +22,88 @@ class DatabaseQueryBuilder extends Database
     public function __construct(string $table)
     {
         $this->tableName = $table;
+    }
+
+    /**
+     * @return DatabaseQueryBuilder
+     */
+    public function debug(): DatabaseQueryBuilder
+    {
+        var_dump(
+            '<pre>',
+            $this,
+            '</pre>'
+        );
         return $this;
     }
 
     /**
-     * @param string $request
-     * @param array $values
-     * @param string|null $type
-     * 
-     * @return array|void
+     * @return DatabaseQueryBuilder
      */
-    private function build(string $request, array $values, ?string $type)
+    public function debugRequest(): DatabaseQueryBuilder
     {
-        try {
-            $request = Database::setPDO()->prepare($request);
-            $request->execute($values);
-            if ($type === 'fetchAll') {
-                return $request->fetchAll(PDO::FETCH_ASSOC);
-            } elseif ($type === 'fetch') {
-                return $request->fetch();
-            }
-        } catch (Exception $e) {
-            die('Erreur: ' . $e->getMessage());
-        }
+        var_dump(
+            '<pre>',
+            '--------------- CLASS ---------------',
+            $this,
+            '---------- debugDumpParams ----------',
+            $this->request->debugDumpParams(),
+            '------------- errorInfo -------------',
+            $this->request->errorInfo(),
+            '</pre>'
+        );
+        return $this;
+    }
+
+    /**
+     * @return DatabaseQueryBuilder
+     */
+    public function simulate(): DatabaseQueryBuilder
+    {
+        $request = $this->build();
+        echo $request;
+        return $this;
+    }
+
+    /**
+     * @param string $mode
+     * @return int
+     */
+    private static function fetchMode(string $mode): int
+    {
+        $mode = strtoupper($mode);
+        return constant("PDO::FETCH_$mode");
+    }
+    
+    /**
+     * @param mixed $mode
+     * @return array
+     */
+    public function fetch(string $mode = 'ASSOC'): array
+    {
+        $mode = self::fetchMode($mode);
+        $request = $this->build();
+        return Database::request(
+            $request,
+            $this->whereValues,
+            'fetch',
+            $mode
+        );
+    }
+    
+    /**
+     * @param mixed $mode
+     * @return array
+     */
+    public function fetchAll(string $mode = 'ASSOC'): array
+    {
+        $mode = self::fetchMode($mode);
+        $request = $this->build();
+        return Database::request(
+            $request,
+            $this->whereValues,
+            'fetch',
+            $mode
+        );
     }
 }
