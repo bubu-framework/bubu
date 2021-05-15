@@ -29,12 +29,18 @@ class DatabaseCreateTable
     private $comments;
     private string $engine = 'InnoDB';
     private static array $required = ['name'];
-
+    
+    /**
+     * @param mixed $name
+     */
     public function __construct($name = null)
     {
         $this->name = $name;
     }
 
+    /**
+     * @return DatabaseCreateTable
+     */
     public function debug(): DatabaseCreateTable
     {
         var_dump(
@@ -65,12 +71,19 @@ class DatabaseCreateTable
         }
     }
 
-    public function column($arguments): DatabaseCreateTable
+    /**
+     * @param string $arguments
+     * @return DatabaseCreateTable
+     */
+    public function column(string $arguments): DatabaseCreateTable
     {
-        $this->allColumn[] = $arguments[0];
+        $this->allColumn[] = $arguments;
         return $this;
     }
 
+    /**
+     * @return DatabaseCreateTable
+     */
     public function addIndex($arguments)
     {
         $this->allIndex[] = 
@@ -83,7 +96,7 @@ class DatabaseCreateTable
         return $this;
     }
 
-    private function make(): string
+    private function build(): string
     {
         foreach (self::$required as $require) {
             if (is_null($this->{$require})) {
@@ -106,16 +119,22 @@ class DatabaseCreateTable
             return $request;
     }
 
+    /**
+     * @return DatabaseCreateTable
+     */
     public function simulate(): DatabaseCreateTable
     {
-        $request = $this->make();
+        $request = $this->build();
         echo $request;
         return $this;
     }
 
-    public function build()
+    /**
+     * @return void
+     */
+    public function execute(): void
     {
-        $request = $this->make();
+        $request = $this->build();
         Database::request($request, [], '');
     }
 }

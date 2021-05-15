@@ -7,7 +7,7 @@ use Exception;
 class Database extends DatabaseRequest
 {
     /**
-     * @return PDO $pdo
+     * @return PDO
      */
     protected static function setPDO(): PDO
     {

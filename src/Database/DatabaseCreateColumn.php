@@ -44,12 +44,18 @@ class DatabaseCreateColumn
 
     public $request;
 
-
+    
+    /**
+     * @param mixed $name
+     */
     public function __construct($name = null)
     {
         $this->name = $name;
     }
-
+    
+    /**
+     * @return DatabaseCreateColumn
+     */
     public function debug(): DatabaseCreateColumn
     {
         var_dump(
@@ -59,7 +65,12 @@ class DatabaseCreateColumn
         );
         return $this;
     }
-
+    
+    /**
+     * @param mixed $name
+     * @param mixed $arguments
+     * @return DatabaseCreateColumn
+     */
     public function __call($name, $arguments): DatabaseCreateColumn
     {
         if (array_key_exists($name, get_class_vars(get_class($this)))) {
