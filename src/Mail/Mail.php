@@ -16,7 +16,9 @@ class Mail
     public static function sendMail(
         string $to,
         string $subject,
-        string $message
+        string $message,
+        string $fromName = $_ENV['FROM_NAME'],
+        string $fromEmail = $_ENV['FROM']
     ): bool {
         $mail = new PHPMailer();
 
@@ -37,7 +39,7 @@ class Mail
         $mail->Username = $_ENV['SMTP_USERNAME'];
         $mail->Password = $_ENV ['SMTP_PASSWORD'];
 
-        $mail->setFrom($_ENV['FROM'], $_ENV['FROM_NAME']);
+        $mail->setFrom($fromEmail, $fromName);
         $mail->addReplyTo($_ENV['REPLY'], $_ENV['REPLY_NAME']);
         $mail->Subject = $subject;
 
