@@ -16,11 +16,18 @@ class Page
      * 
      * @return never
      */
-    public function show(string $page, ?int $code = null, ?string $message = '')
+    public function show(string $page, ?int $code = null, ?string $message = '', $sessionCache = null)
     {
         if (!is_null($code)) {
             http_response_code($code);
         }
+
+        if (is_null($sessionCache)) {
+            $sessionCache = $_ENV['HTTP_EXPIRES'];
+        }
+
+        session_cache_expire($sessionCache);
+        session_cache_limiter($_ENV['SESSION_CACHE_LIMITER']);
 
         $this->pageContent = file_get_contents("templates/{$page}.bubu.php", true);
         $this->pageContent = ExtendHtmlTags::create($this)->pageContent;
