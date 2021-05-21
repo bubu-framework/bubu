@@ -1,6 +1,6 @@
 <?php
 
-require '../vendor/autoload.php';
+require '../vendor/autoload.php';/*
 session_start();
 
 if (!isset($_SESSION['load'])) {
@@ -14,7 +14,7 @@ if (!isset($_SESSION['load'])) {
         ]
     ];
 }
-
+*/
 $repository = Dotenv\Repository\RepositoryBuilder::createWithDefaultAdapters()->make();
 $dotenv = Dotenv\Dotenv::create($repository, '../');
 $dotenv->load();
