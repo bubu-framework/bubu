@@ -15,9 +15,13 @@ For limite recursive call, incluable files can't include other incluable file.
 
 458: All fields have not been completed
 
-## Session
+## Http
 
-SESSION_DURATION=1 equal to 1 day
+SESSION_DURATION=1 Equal to 1 day
+
+SESSION_CACHE_LIMITER=private Limiter to private mode
+
+HTTP_EXPIRES=60 Equal to 60 minutes
 
 ## include
 
