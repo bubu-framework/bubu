@@ -2,8 +2,8 @@
 
 namespace Bubu\Flash;
 
-use Bubu\DebTools\Dump;
 use Bubu\Http\Session;
+use Bubu\DebTools\Dump;
 
 class Flash
 {
@@ -50,8 +50,12 @@ class Flash
         );
     }
 
-    public static function flashRender()
+    public static function generate()
     {
+        if (is_null(Session::get('flash'))) {
+            return '';
+        }
+
         $flash = <<<HTML
             <style>
                 .flash {
@@ -91,7 +95,6 @@ class Flash
                     $value = $value['message'];
                     $iconCode = '&#128712';
                     break;
-
             }
 
             foreach ((array) $value as $messages) {
@@ -113,6 +116,7 @@ class Flash
                 HTML;
             }
         }
-        echo $flash;
+        Session::delete('flash');
+        return $flash;
     }
 }

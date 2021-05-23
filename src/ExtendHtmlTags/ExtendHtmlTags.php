@@ -2,6 +2,7 @@
 namespace Bubu\ExtendHtmlTags;
 
 use App\Views\Page;
+use Bubu\Flash\Flash;
 
 class ExtendHtmlTags
 {
@@ -23,6 +24,7 @@ class ExtendHtmlTags
         $page = self::include($page);
         $page = self::variable($page);
         $page = self::tags($page);
+        $page = self::flash($page);
         return $page;
     }
 
@@ -88,6 +90,23 @@ class ExtendHtmlTags
                 $page->pageContent
             );
         }
+        return $page;
+    }
+
+    /**
+     * @param Page $page
+     * 
+     * @return Page
+     */
+    private static function flash(Page $page): Page
+    {
+        $page->pageContent = preg_replace_callback(
+            "/(\\" . self::$prefix ."flash)+/im",
+            function() {
+                return Flash::generate();
+            },
+            $page->pageContent
+        );
         return $page;
     }
 }
