@@ -4,16 +4,21 @@ namespace Bubu\Http;
 
 class Session
 {
-    public function __construct()
+    public function __construct(?int $sessionCache = null)
     {
         if (session_status() !== PHP_SESSION_ACTIVE) {
             ini_set('session.gc_maxlifetime', $_ENV['SESSION_DURATION'] * 60 * 60 * 24);
             session_set_cookie_params($_ENV['SESSION_DURATION'] * 60 * 60 * 24);
+            if (is_null($sessionCache)) {
+                $sessionCache = $_ENV['HTTP_EXPIRES'];
+            }
+            session_cache_expire($sessionCache);
+            session_cache_limiter($_ENV['SESSION_CACHE_LIMITER']);
             session_start();
         }
     }
 
-    public static function start()
+    public static function start(): Session
     {
         return new Session();
     }
