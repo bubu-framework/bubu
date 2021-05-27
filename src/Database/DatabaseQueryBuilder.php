@@ -7,12 +7,9 @@ class DatabaseQueryBuilder extends Database
     use QueryMethods;
 
     /**
-     * @var string $table Table name
      * @var string $request
      * @var array $params
      */
-    protected string $table;
-    protected $request;
     protected array $params = [];
     protected static array $required = ['table'];
 
@@ -21,7 +18,7 @@ class DatabaseQueryBuilder extends Database
      */
     public function __construct(string $table)
     {
-        $this->tableName = $table;
+        $this->table($table);
     }
 
     /**
@@ -86,7 +83,7 @@ class DatabaseQueryBuilder extends Database
         return Database::request(
             $request,
             $this->whereValues,
-            'fetch',
+            Database::FETCH,
             $mode
         );
     }
@@ -102,7 +99,7 @@ class DatabaseQueryBuilder extends Database
         return Database::request(
             $request,
             $this->whereValues,
-            'fetch',
+            Database::FETCH_ALL,
             $mode
         );
     }

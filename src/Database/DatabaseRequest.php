@@ -4,9 +4,13 @@ namespace Bubu\Database;
 
 use PDO;
 use Exception;
+use Bubu\DebTools\Dump;
 
 class DatabaseRequest
 {
+    const FETCH = 'fetch';
+    const FETCH_ALL = 'fetchAll';
+
     /**
      * @param string $request
      * @param array $values
@@ -26,6 +30,7 @@ class DatabaseRequest
                 } else {
                     $key = ':' . ltrim($key, ':');
                 }
+
 
                 switch (gettype($value)) {
                     case 'integer':

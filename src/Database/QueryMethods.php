@@ -4,17 +4,27 @@ namespace Bubu\Database;
 
 trait QueryMethods
 {
-    
+
     /**
+     * @var string $table
      * @var string|null $as
-     * @var string|null $select
+     * @var string|null $action
      * @var string|null $condition
+     * @var string|null $set
      * @var array $whereValues
      */
+    protected $table;
     protected $as;
-    protected $select;
+    protected $action;
     protected $condition;
+    protected $set;
     protected array $whereValues = [];
+
+    public function table(string $table): self
+    {
+        $this->table = $table;
+        return $this;
+    }
 
     /**
      * @param  string $as
@@ -22,7 +32,7 @@ trait QueryMethods
      */
     public function as(string $as): self
     {
-        $this->as = $as;
+        $this->as =  "AS {$as} ";
         return $this;
     }
 
@@ -40,7 +50,7 @@ trait QueryMethods
                 $select .= " `{$value}`,";
             }
         }
-        $this->select = rtrim($select, ',') . ' FROM ';
+        $this->action = rtrim($select, ',') . ' FROM `[TABLE_NAME]`';
         return $this;
     }
 
@@ -49,7 +59,16 @@ trait QueryMethods
      */
     public function delete(): self
     {
-        $this->delete = 'DELETE FROM ';
+        $this->action = 'DELETE FROM `[TABLE_NAME]` ';
+        return $this;
+    }
+
+    /**
+     * @return self
+     */
+    public function update(): self
+    {
+        $this->action = 'UPDATE `[TABLE_NAME]` ';
         return $this;
     }
     
@@ -65,10 +84,12 @@ trait QueryMethods
             $condition = $this->condition . ' OR (';
         }
         foreach ($where as $value) {
-            $marker = array_key_first($value[1]);
+            $marker = key($value[1]);
             $condition .= "`{$value[0]}` " . (isset($value[2]) ? "{$value[2]} " : '= ') . "{$marker} AND ";
-            if (isset($value[1][1])) {
-                $this->whereValues[] = $value[1];
+            if (isset($value[1])) {
+                $this->whereValues[
+                    $marker
+                ] = $value[1][$marker];
             }
         }
         $condition = rtrim($condition, ' AND ');
@@ -82,7 +103,10 @@ trait QueryMethods
      */
     private function build(): string
     {
-        $request = 0;
+       $request = str_replace('[TABLE_NAME]', $this->table, $this->action);
+       if (!is_null($this->condition)) {
+           $request .= $this->condition;
+       }
        return $request;
     }
 }
