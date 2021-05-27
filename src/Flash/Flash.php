@@ -106,7 +106,7 @@ class Flash
                             border-color: {$textColor};
                             background: {$bg};
                         "
-                        onclick="style.display = 'none'"
+                        onclick="this.remove()"
                     >
                         <p>
                             <span style="margin: 0 10px; font-size: 1.5em; vertical-align: sub">{$iconCode}</span>
