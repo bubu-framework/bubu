@@ -31,25 +31,25 @@ You can change prefix setting in [ExtendHtmlTags](App/ExtendHtmlTags/ExtendHtmlT
 
 - ### css
 
-        `+css('file name')`
+        +css('file name')
 
 - ### js
 
-        `+js('file name')`
+        +js('file name')
 
 - ### file
 
-        `+include('file name')`
+        +include('file name')
 
 - ### picture
 
-        `+picture('file name with extension')`
+        +picture('file name with extension')
 
 - ### include variable
 
-        `+||var||` for echo variable with `htmlspecialchars`
+        +||var|| for echo variable with htmlspecialchars
 
-        `+|!var!|` for echo variable without `htmlspecialchars`
+        +|!var!| for echo variable without htmlspecialchars
 
 - ### incluable forlder
 
