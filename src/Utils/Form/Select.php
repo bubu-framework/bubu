@@ -22,12 +22,12 @@ class Select
     public function option(
         string $value,
         string $text,
-        bool $disable = false,
+        bool $disabled = false,
         bool $selected = false
     ): array {
         $opt = '';
-        if ($disable) {
-            $opt .= ' disable ';
+        if ($disabled) {
+            $opt .= ' disabled ';
         }
 
         if ($selected) {
