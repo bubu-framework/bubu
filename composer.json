@@ -2,14 +2,12 @@
     "require": {
         "vlucas/phpdotenv": "^5.3",
         "phpmailer/phpmailer": "^6.4",
-        "nesbot/carbon": "^2.47"
+        "nesbot/carbon": "^2.48"
     },
     "autoload": {
         "psr-4" : {
             "App\\" : "App",
             "Bubu\\" : "src"
         }
-    },
-    "require-dev": {
     }
 }
