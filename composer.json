@@ -9,5 +9,7 @@
             "App\\" : "App",
             "Bubu\\" : "src"
         }
+    },
+    "require-dev": {
     }
 }
