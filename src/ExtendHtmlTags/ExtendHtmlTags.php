@@ -11,7 +11,7 @@ class ExtendHtmlTags
     public static $types = [
         'css' => '<link attr rel="stylesheet" href="--link--.css"/>',
         'js' => '<script attr src="--link--.js"></script>',
-        'picture' => '<img attr src="--link"/>'
+        'picture' => '<img attr src="--link--"/>',
     ];
 
     /**
