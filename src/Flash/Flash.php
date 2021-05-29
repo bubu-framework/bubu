@@ -3,7 +3,6 @@
 namespace Bubu\Flash;
 
 use Bubu\Http\Session;
-use Bubu\DebTools\Dump;
 
 class Flash
 {

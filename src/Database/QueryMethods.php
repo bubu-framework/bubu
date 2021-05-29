@@ -2,8 +2,6 @@
 
 namespace Bubu\Database;
 
-use Bubu\DebTools\Dump;
-
 trait QueryMethods
 {
 
