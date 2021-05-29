@@ -4,6 +4,9 @@ namespace Bubu\Utils\Form;
 
 class Textarea
 {
+    /**
+     * Textarea attributes
+     */
     public array $autocomplete  = ['autocomplete' => 'on'];
     public array $autofocus     = ['boolAttribute' => 'autofocus'];
     public array $disable       = ['boolAttribute' => 'disable'];
@@ -13,8 +16,8 @@ class Textarea
 
     
     /**
-     * name
-     *
+     * Name to give to textarea field
+     * 
      * @param  string $name
      * @return array
      */
@@ -24,8 +27,8 @@ class Textarea
     }
     
     /**
-     * value
-     *
+     * Value of textarea field
+     * 
      * @param  string $value
      * @return array
      */
@@ -35,8 +38,8 @@ class Textarea
     }
 
     /**
-     * placeholder
-     *
+     * Placeholder of textarea field
+     * 
      * @param  string $placeholder
      * @return void
      */
@@ -46,8 +49,8 @@ class Textarea
     }
 
     /**
-     * minlength
-     *
+     * Min length of textarea field
+     * 
      * @param  int $minlength
      * @return void
      */
@@ -57,8 +60,8 @@ class Textarea
     }
 
     /**
-     * maxlength
-     *
+     * Man length of textarea field
+     * 
      * @param  int $maxlength
      * @return void
      */
@@ -79,7 +82,7 @@ class Textarea
     }
 
     /**
-     * cols
+     * Number of columns
      *
      * @param  int $cols
      * @return void
@@ -90,7 +93,7 @@ class Textarea
     }
 
     /**
-     * rows
+     * Number of rows
      *
      * @param  int $rows
      * @return void
