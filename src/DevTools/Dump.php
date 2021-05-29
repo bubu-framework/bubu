@@ -1,6 +1,6 @@
 <?php
 
-namespace Bubu\DebTools;
+namespace Bubu\DevTools;
 
 class Dump
 {
