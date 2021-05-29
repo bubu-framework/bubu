@@ -43,6 +43,7 @@ class Mail
         $mail->addReplyTo($_ENV['REPLY'], $_ENV['REPLY_NAME']);
         $mail->Subject = $subject;
 
+        $mail->CharSet = 'UTF-8';
         $mail->msgHTML($message, __DIR__);
         $mail->AltBody = 'Error to view message';
         $mail->AddAddress($to);
