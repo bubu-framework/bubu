@@ -1,0 +1,4 @@
+.history/*
+public/test.php
+vendor/*
+.env
