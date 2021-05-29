@@ -4,7 +4,6 @@ namespace Bubu\Database;
 
 use PDO;
 use Exception;
-use Bubu\DebTools\Dump;
 
 class DatabaseRequest
 {
@@ -18,7 +17,7 @@ class DatabaseRequest
      * @param int $mode
      * @return array|bool
      */
-    public static function request(string $request, array $values, ?string $type = null, int $mode = PDO::FETCH_ASSOC): array
+    public static function request(string $request, array $values, ?string $type = null, int $mode = PDO::FETCH_ASSOC): mixed
     {
         try {
             $request = Database::setPDO()->prepare($request);

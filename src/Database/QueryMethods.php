@@ -2,6 +2,8 @@
 
 namespace Bubu\Database;
 
+use Bubu\DebTools\Dump;
+
 trait QueryMethods
 {
 
@@ -11,14 +13,14 @@ trait QueryMethods
      * @var string|null $action
      * @var string|null $condition
      * @var string|null $set
-     * @var array $whereValues
+     * @var array $values
      */
     protected $table;
     protected $as;
     protected $action;
     protected $condition;
     protected $set;
-    protected array $whereValues = [];
+    protected array $values = [];
 
     public function table(string $table): self
     {
@@ -33,6 +35,28 @@ trait QueryMethods
     public function as(string $as): self
     {
         $this->as =  "AS {$as} ";
+        return $this;
+    }
+
+    /**
+     * @param array $values ['column name' => 'value']
+     * @return self
+     */
+    public function insert(array $values): self
+    {
+        $columns = '';
+        $markers = '';
+        foreach ($values as $key => $value) {
+            $columns .= "`{$key}`, ";
+            $markers .= ":{$key}, ";
+            $this->values[
+                $key
+            ] = $value;
+        }
+        $columns = trim($columns, ', ');
+        $markers = trim($markers, ', ');
+        $request = 'INSERT INTO `[TABLE_NAME]` (' . $columns . ') VALUES (' . $markers . ')';
+        $this->action = $request;
         return $this;
     }
 
@@ -66,12 +90,20 @@ trait QueryMethods
     /**
      * @return self
      */
-    public function update(): self
+    public function update(array $values): self
     {
-        $this->action = 'UPDATE `[TABLE_NAME]` ';
+        $request = '';
+        foreach ($values as $key => $value) {
+            $request .= "`{$key}` = :{$key}, ";
+            $this->values[
+                $key
+            ] = $value;
+        }
+        $request = trim($request, ', ');
+        $this->action = 'UPDATE `[TABLE_NAME]` SET ' . $request;
         return $this;
     }
-    
+
     /**
      * @param array $where
      * @return self
@@ -87,7 +119,7 @@ trait QueryMethods
             $marker = key($value[1]);
             $condition .= "`{$value[0]}` " . (isset($value[2]) ? "{$value[2]} " : '= ') . "{$marker} AND ";
             if (isset($value[1])) {
-                $this->whereValues[
+                $this->values[
                     $marker
                 ] = $value[1][$marker];
             }

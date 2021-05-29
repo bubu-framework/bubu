@@ -71,7 +71,20 @@ class DatabaseQueryBuilder extends Database
         $mode = strtoupper($mode);
         return constant("PDO::FETCH_$mode");
     }
-    
+
+    /**
+     * @param mixed $mode
+     * @return array
+     */
+    public function execute(): bool
+    {
+        $request = $this->build();
+        return Database::request(
+            $request,
+            $this->values,
+        );
+    }
+
     /**
      * @param mixed $mode
      * @return array
@@ -82,7 +95,7 @@ class DatabaseQueryBuilder extends Database
         $request = $this->build();
         return Database::request(
             $request,
-            $this->whereValues,
+            $this->values,
             Database::FETCH,
             $mode
         );
@@ -98,7 +111,7 @@ class DatabaseQueryBuilder extends Database
         $request = $this->build();
         return Database::request(
             $request,
-            $this->whereValues,
+            $this->values,
             Database::FETCH_ALL,
             $mode
         );
