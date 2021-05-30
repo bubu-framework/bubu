@@ -120,6 +120,10 @@ class Form
                 $element = '<label --ATTRIBUTES--></label>';
                 break;
 
+            case 'button':
+                $element = '<button --ATTRIBUTES--></button>';
+                break;
+
             case 'select':
                 $element = '<select --ATTRIBUTES--></select>';
                 break;
