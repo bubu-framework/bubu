@@ -2,7 +2,7 @@
 
 namespace Bubu\Flash;
 
-use Bubu\Http\Session;
+use Bubu\Http\Session\Session;
 
 class Flash
 {

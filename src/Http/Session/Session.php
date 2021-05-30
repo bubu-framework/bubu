@@ -1,6 +1,6 @@
 <?php
 
-namespace Bubu\Http;
+namespace Bubu\Http\Session;
 
 class Session
 {
