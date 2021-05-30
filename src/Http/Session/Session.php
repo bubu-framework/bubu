@@ -4,11 +4,16 @@ namespace Bubu\Http\Session;
 
 class Session
 {
-    public function __construct(?int $sessionCache = null)
+    public function __construct(?int $sessionCache = null, ?int $sessionLifetime = null)
     {
         if (session_status() !== PHP_SESSION_ACTIVE) {
-            ini_set('session.gc_maxlifetime', $_ENV['SESSION_DURATION'] * 60 * 60 * 24);
-            session_set_cookie_params($_ENV['SESSION_DURATION'] * 60 * 60 * 24);
+
+            if (is_null($sessionLifetime)) {
+                $sessionLifetime = $_ENV['SESSION_DURATION'];
+            }
+
+            ini_set('session.gc_maxlifetime', $sessionLifetime * 60 * 60 * 24);
+            session_set_cookie_params($sessionLifetime * 60 * 60 * 24);
             if (is_null($sessionCache)) {
                 $sessionCache = $_ENV['HTTP_EXPIRES'];
             }
@@ -18,9 +23,9 @@ class Session
         }
     }
 
-    public static function start(): Session
+    public static function start(?int $sessionCache = null, ?int $sessionLifetime = null): Session
     {
-        return new Session();
+        return new Session($sessionCache, $sessionLifetime);
     }
 
     public static function get(string $key): mixed
@@ -48,6 +53,15 @@ class Session
     {
         self::start();
         unset($_SESSION[$key]);
+    }
+
+    public function changeSessionLifetime(int $newLifetime)
+    {
+        $tempSession = $_SESSION;
+        $cacheExpire = session_cache_expire();
+        self::destroy();
+        self::start($cacheExpire, $newLifetime);
+        $_SESSION = $tempSession;
     }
 
     public static function destroy(): void
