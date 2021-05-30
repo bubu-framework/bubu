@@ -67,6 +67,17 @@ class Input
     }
 
     /**
+     * id
+     *
+     * @param  string $id
+     * @return array
+     */
+    public function id(string $id): array
+    {
+        return ['id' => $id];
+    }
+
+    /**
      * minlength
      *
      * @param  int $minlength
