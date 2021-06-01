@@ -17,6 +17,7 @@ class DatabaseCreateTable
      * @var string $name Table name
      * @var array $allColumn Contain all columns request
      * @var array $allIndex Contain all index request
+     * @var array $foreignKey foreign keys of columns
      * @var string $collate Collate of table
      * @var string $comments Comments of table
      * @var string $engine Engine of table
@@ -25,6 +26,7 @@ class DatabaseCreateTable
     private string $name;
     private array $allColumn = [];
     private array $allIndex = [];
+    private array $foreignKey = [];
     private string $collate = 'utf8_general_ci';
     private $comments;
     private string $engine = 'InnoDB';
@@ -82,9 +84,10 @@ class DatabaseCreateTable
     }
 
     /**
+     * @param array $arguments
      * @return DatabaseCreateTable
      */
-    public function addIndex($arguments)
+    public function addIndex(array $arguments)
     {
         $this->allIndex[] = 
             strtoupper($arguments['type'])
@@ -93,6 +96,25 @@ class DatabaseCreateTable
             . ' (`'
             . implode('`,`', $arguments['column'])
             . '`)';
+        return $this;
+    }
+
+    /**
+     * @return DatabaseCreateTable
+     */
+    public function foreignKey($arguments)
+    {
+        $this->foreignKey[] = 
+            'CONSTRAINT '
+            . "`{$arguments['name']}`"
+            . ' FOREIGN KEY (`'
+            . implode('`,`', $arguments['columns'])
+            . '`) REFERENCES '
+            . "`{$arguments['references']}` (`"
+            . implode('`,`', $arguments['foreign'])
+            . '`) '
+            . (isset($arguments['on update']) ? 'ON UPDATE ' . strtoupper($arguments['on update']) . ' ' : '')
+            . (isset($arguments['on delete']) ? 'ON DELETE ' . strtoupper($arguments['on delete']) . ' ' : '');
         return $this;
     }
 
@@ -111,6 +133,7 @@ class DatabaseCreateTable
             ." `{$this->name}` ("
             . implode(',', $this->allColumn)
             . (!is_null($this->allIndex) ? ',' . implode(',', $this->allIndex) : '')
+            . (!is_null($this->foreignKey) ? ',' . implode(',', $this->foreignKey) : '')
             . ')'
             . " COLLATE='{$this->collate}'"
             . (!is_null($this->comments) ? " COMMENT '{$this->comments}'" : '')
