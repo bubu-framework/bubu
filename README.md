@@ -3,7 +3,6 @@
 ## Requirements
 
 - Require php ^7.4
-- Require OAuth extension
 
 ## Note
 
