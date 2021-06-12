@@ -100,7 +100,7 @@ class DatabaseCreateTable
             . (strtoupper($arguments['type']) === 'PRIMARY' ? ' KEY ' : ' INDEX ')
             . "`{$arguments['name']}`"
             . ' (`'
-            . implode('`,`', $arguments['column'])
+            . implode('`,`', $arguments['columns'])
             . '`)';
         return $this;
     }
@@ -139,8 +139,8 @@ class DatabaseCreateTable
                 . ($this->ifNotExists ? ' IF NOT EXISTS' : '')
                 ." `{$this->name}` ("
                 . implode(',', $this->allColumn)
-                . (!is_null($this->allIndex) ? ',' . implode(',', $this->allIndex) : '')
-                . (!is_null($this->foreignKey) ? ',' . implode(',', $this->foreignKey) : '')
+                . (!empty($this->allIndex) ? ',' . implode(',', $this->allIndex) : '')
+                . (!empty($this->foreignKey) ? ',' . implode(',', $this->foreignKey) : '')
                 . ')'
                 . " COLLATE='{$this->collate}'"
                 . (!is_null($this->comments) ? " COMMENT '{$this->comments}'" : '')
