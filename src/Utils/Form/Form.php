@@ -2,8 +2,6 @@
 
 namespace Bubu\Utils\Form;
 
-use Bubu\DevTools\Dump;
-
 class Form
 {
 
@@ -13,6 +11,7 @@ class Form
     public Label $label;
     public Button $button;
     public Select $select;
+    public Csrf $csrf;
     private array $elements = [];
     private array $formAttributes = [];
 
@@ -23,6 +22,7 @@ class Form
         $this->label    = new Label();
         $this->button   = new Button();
         $this->select   = new Select();
+        $this->csrf     = new Csrf();
     }
 
     // Form attributes
@@ -151,6 +151,17 @@ class Form
         }
         $this->elements[] = str_replace('--ATTRIBUTES--', $attributes, $element);
         return $this;
+    }
+
+    public function csrf(): self
+    {
+        $this->add(Csrf::create());
+        return $this;
+    }
+
+    public static function checkCsrf(array $post)
+    {
+        return Csrf::check($post);
     }
 
     public function build(): string
