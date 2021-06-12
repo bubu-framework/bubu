@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Views\Page;
+use Bubu\Http\HttpRequire\HttpRequire;
 
 class HomeController
 {
@@ -10,7 +11,8 @@ class HomeController
      */
     public static function create()
     {
-        (new Page)->show('home');
+        HttpRequire::https();
+        (new Page)->httpCode(101)->httpMessage('Messages super')->show('home');
     }
 
     public static function logout()
