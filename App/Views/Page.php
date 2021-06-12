@@ -2,6 +2,7 @@
 namespace App\Views;
 
 use App\Views\Exception\PageException;
+use Bubu\Exception\ShowException;
 use Bubu\ExtendHtmlTags\ExtendHtmlTags;
 
 
@@ -24,18 +25,24 @@ class Page
      */
     public function show(string $page)
     {
+        try {
+            if (!is_null($this->httpMessage)) {
+                if (is_null($this->httpCode)) {
+                    throw new PageException('HTTP Code is required with HTTP Message!');
+                } else {
+                    header("HTTP/1.1 {$this->httpCode} {$this->httpMessage}");
+                }
+            } elseif (!is_null($this->httpCode)) {
+                $codes = json_decode(file_get_contents($_ENV['HTTP_CODE_FILE'] . 'httpMessages.json'), true);
 
-        if (!is_null($this->httpMessage)) {
-
-            if (is_null($this->httpCode)) throw new PageException('HTTP Code is required with HTTP Message!');
-            else { header("HTTP/1.1 {$this->httpCode} {$this->httpMessage}"); }
-
-        } elseif (!is_null($this->httpCode)) {
-            $codes = json_decode(file_get_contents($_ENV['HTTP_CODE_FILE'] . 'httpMessages.json'), true);
-
-            if (array_key_exists($this->httpCode, $codes)) header("HTTP/1.1 {$this->httpCode} {$codes[$this->httpCode]}");
-            else { http_response_code($this->httpCode); }
-
+                if (array_key_exists($this->httpCode, $codes)) {
+                    header("HTTP/1.1 {$this->httpCode} {$codes[$this->httpCode]}");
+                } else {
+                    http_response_code($this->httpCode);
+                }
+            }
+        } catch (PageException $e) {
+            ShowException::SR($e);
         }
 
         $this->pageContent = file_get_contents("templates/{$page}.bubu.php", true);

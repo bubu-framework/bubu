@@ -2,6 +2,9 @@
 
 namespace Bubu\Database;
 
+use Bubu\Exception\ShowException;
+use Bubu\Database\DatabaseException;
+
 /**
  * @method DatabaseCreateColumn type(string $type)
  * @method DatabaseCreateColumn size(int $size)
@@ -73,17 +76,21 @@ class DatabaseCreateColumn
      */
     public function __call($name, $arguments): DatabaseCreateColumn
     {
-        if (array_key_exists($name, get_class_vars(get_class($this)))) {
-            if (count($arguments) === 0) {
-                $this->{$name} = true;
-            } elseif (count($arguments) === 1) {
-                $this->{$name} = $arguments[0];
+        try {
+            if (array_key_exists($name, get_class_vars(get_class($this)))) {
+                if (count($arguments) === 0) {
+                    $this->{$name} = true;
+                } elseif (count($arguments) === 1) {
+                    $this->{$name} = $arguments[0];
+                } else {
+                    $this->{$name} = $arguments;
+                }
+                return $this;
             } else {
-                $this->{$name} = $arguments;
+                throw new DatabaseException('Property not found.');
             }
-            return $this;
-        } else {
-            throw new DatabaseException('Property not found.');
+        } catch (DatabaseException $e) {
+            ShowException::SR($e);
         }
     }
 
@@ -92,35 +99,39 @@ class DatabaseCreateColumn
      */
     public function __toString(): string
     {
-        foreach (self::$required as $require) {
-            if (is_null($this->{$require})) {
-                throw new DatabaseException('A variable required is null');
+        try {
+            foreach (self::$required as $require) {
+                if (is_null($this->{$require})) {
+                    throw new DatabaseException('A variable required is null');
+                }
             }
+            $request = 
+                trim(
+                    "`{$this->name}`"
+                        . ' '
+                        . strtoupper($this->type)
+                        . (!is_null($this->size) ? "({$this->size})" : '')
+                        . ($this->unsigned ? ' UNSIGNED' : '')
+                        . ($this->zerofill ? ' ZEROFILL' : '')
+                        . ($this->notNull ? ' NOT NULL' : ' NULL')
+                        . ($this->auto_increment ? ' AUTO_INCREMENT' : '')
+                        . (
+                            !is_null($this->defaultValue)
+                            ? ' DEFAULT' . 
+                                (
+                                    $this->defaultValue[1] === 'string'
+                                    ? " '{$this->defaultValue[0]}'"
+                                    : " {$this->defaultValue[0]}"
+                                )
+                            : '')
+
+
+                        . (!is_null($this->comments) ? " COMMENT '{$this->comments}'" : '')
+                        . (!is_null($this->collate) ? " COLLATE '{$this->collate}'" : '')
+                    );
+            return $request;
+        } catch (DatabaseException $e) {
+            ShowException::SR($e);
         }
-        $request = 
-            trim(
-                "`{$this->name}`"
-                    . ' '
-                    . strtoupper($this->type)
-                    . (!is_null($this->size) ? "({$this->size})" : '')
-                    . ($this->unsigned ? ' UNSIGNED' : '')
-                    . ($this->zerofill ? ' ZEROFILL' : '')
-                    . ($this->notNull ? ' NOT NULL' : ' NULL')
-                    . ($this->auto_increment ? ' AUTO_INCREMENT' : '')
-                    . (
-                        !is_null($this->defaultValue)
-                        ? ' DEFAULT' . 
-                            (
-                                $this->defaultValue[1] === 'string'
-                                ? " '{$this->defaultValue[0]}'"
-                                : " {$this->defaultValue[0]}"
-                            )
-                        : '')
-
-
-                    . (!is_null($this->comments) ? " COMMENT '{$this->comments}'" : '')
-                    . (!is_null($this->collate) ? " COLLATE '{$this->collate}'" : '')
-                );
-        return $request;
     }
 }
