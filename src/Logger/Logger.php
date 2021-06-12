@@ -3,7 +3,6 @@
 namespace Bubu\Logger;
 
 use Carbon\Carbon;
-use LogicException;
 
 class Logger
 {
@@ -16,56 +15,57 @@ class Logger
      * @param string $log
      * @return bool
      */
-    public static function addLog(string $log): bool
+    public static function addLog(string $log, string $file = 'errors'): bool
     {
         $date = Carbon::now($_ENV['TIMEZONE']);
         $textToAppend = "[{$date}]: {$log}";
         if (
             file_put_contents(
-                self::$logPath . 'errors.log',
+                self::$logPath . $file . '.log',
                 $textToAppend . PHP_EOL,
                 FILE_APPEND | LOCK_EX | FILE_USE_INCLUDE_PATH
             )
             === false
         ) {
-            throw new LogicException('An error encountered');
+            throw new LoggerException('An error encountered');
         } else {
             return true;
         }
     }
     
     /**
+     * @param string $file
      * @return bool
      */
-    public static function cleanLog(): bool
+    public static function cleanLog(string $file = 'errors'): bool
     {
         if (
             file_put_contents(
-                self::$logPath . 'errors.log',
+                self::$logPath . $file . '.log',
                 null,
                 FILE_USE_INCLUDE_PATH
             )
             === false
         ) {
-            throw new LogicException('An error encountered');
+            throw new LoggerException('An error encountered');
         } else {
             return true;
         }
     }
 
     /**
-     * @param string $logName
+     * @param string $file
      * @return string
      */
-    public static function readLog(string $logName = 'errors'): string
+    public static function readLog(string $file = 'errors'): string
     {
-        $logName = self::$logPath . "{$logName}.log";
+        $file = self::$logPath . "{$file}.log";
         $content = file_get_contents(
-            $logName,
+            $file,
             FILE_USE_INCLUDE_PATH
         );
         if ($content === false) {
-            throw new LogicException('An error encountered');
+            throw new LoggerException('An error encountered');
         } else {
             return $content;
         }
@@ -73,24 +73,25 @@ class Logger
 
     /**
      * @param string|null $logName
+     * @param string $file
      * @return bool
      */
-    public static function saveLog(?string $logName = null): bool
+    public static function saveLog(?string $logName = null, string $file = 'errors'): bool
     {
         if (is_null($logName)) {
             $logName = Carbon::now($_ENV['TIMEZONE']);
             $logName = str_replace(':', '-', $logName);
         }
 
-        if (copy(self::$logPath . 'errors.log', self::$logPath . "{$logName}.log")) {
+        if (copy(self::$logPath . $file . '.log', self::$logPath . "{$logName}.log")) {
             return true;
         } else {
-            throw new LogicException('An error encountered');
+            throw new LoggerException('An error encountered');
         }
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public static function deleteAllLog(): bool
     {
