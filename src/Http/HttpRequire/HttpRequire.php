@@ -2,6 +2,7 @@
 
 namespace Bubu\Http\HttpRequire;
 
+use Bubu\Exception\ShowException;
 use Bubu\Http\HttpRequire\Exception\HttpRequireException;
 
 class HttpRequire
@@ -16,7 +17,11 @@ class HttpRequire
     public static function https(bool $throwException = false)
     {
         if ($throwException) {
-            throw new HttpRequireException('HTTPS is required');
+            try {
+                throw new HttpRequireException('HTTPS is required');
+            } catch (HttpRequireException $e) {
+                ShowException::SR($e);
+            }
         } else {
             if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] === 'off') {
                 $location = 'https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
