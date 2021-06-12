@@ -73,7 +73,6 @@ class Users
             ])
             ->collate('utf8_general_ci')
             ->engine('InnoDB')
-            ->simulate()
             ->execute();
     }
 }
