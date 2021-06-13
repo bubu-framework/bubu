@@ -57,8 +57,7 @@ class DatabaseQueryBuilder extends Database
      */
     public function simulate(): DatabaseQueryBuilder
     {
-        $request = $this->build();
-        echo $request;
+        echo $this->build();
         return $this;
     }
 
@@ -89,7 +88,7 @@ class DatabaseQueryBuilder extends Database
      * @param mixed $mode
      * @return array
      */
-    public function fetch(string $mode = 'ASSOC'): array
+    public function fetch(string $mode = 'ASSOC')
     {
         $mode = self::fetchMode($mode);
         $request = $this->build();
@@ -105,7 +104,7 @@ class DatabaseQueryBuilder extends Database
      * @param mixed $mode
      * @return array
      */
-    public function fetchAll(string $mode = 'ASSOC'): array
+    public function fetchAll(string $mode = 'ASSOC')
     {
         $mode = self::fetchMode($mode);
         $request = $this->build();
