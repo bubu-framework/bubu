@@ -18,6 +18,8 @@ class Database extends DatabaseRequest
                 $_ENV['DB_PASSWORD']
             );
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $pdo->setAttribute(PDO::ATTR_STRINGIFY_FETCHES, false);
+            $pdo->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             return $pdo;
         } catch (Exception $e) {
             die('Erreur: ' . $e->getMessage());
