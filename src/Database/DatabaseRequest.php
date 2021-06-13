@@ -23,43 +23,45 @@ class DatabaseRequest
             $request = Database::setPDO()->prepare($request);
             $i = 1;
             foreach ($values as $key => $value) {
-
                 if ($key === '?') {
                     $key = $i;
                 } else {
                     $key = ':' . ltrim($key, ':');
                 }
-
-
                 switch (gettype($value)) {
                     case 'integer':
-                        $request->bindParam($key, $value, PDO::PARAM_INT);
+                        $request->bindValue($key, $value, PDO::PARAM_INT);
                         break;
-                    
+
                     case 'string':
-                        $request->bindParam($key, $value, PDO::PARAM_STR);
+                        $request->bindValue($key, $value, PDO::PARAM_STR);
                         break;
 
                     case 'boolean':
-                        $request->bindParam($key, $value, PDO::PARAM_BOOL);
+                        $request->bindValue($key, $value, PDO::PARAM_BOOL);
                         break;
 
                     case 'NULL':
-                        $request->bindParam($key, $value, PDO::PARAM_NULL);
+                        $request->bindValue($key, $value, PDO::PARAM_NULL);
                         break;
 
                     default:
-                        $request->bindParam($key, $value);
+                        $request->bindValue($key, $value);
                         break;
                 }
                 $i++;
             }
             $request->execute();
             if ($type === 'fetchAll') {
-                return $request->fetchAll($mode);
+                $return = $request->fetchAll($mode);
+                $request->closeCursor();
+                return $return;
             } elseif ($type === 'fetch') {
-                return $request->fetch($mode);
+                $return = $request->fetch($mode);
+                $request->closeCursor();
+                return $return;
             } else {
+                $request->closeCursor();
                 return true;
             }
         } catch (Exception $e) {
