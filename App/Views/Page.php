@@ -1,10 +1,11 @@
 <?php
 namespace App\Views;
 
-use App\Views\Exception\PageException;
+use Bubu\Http\Auth\Auth\Auth;
 use Bubu\Exception\ShowException;
+use App\Views\Exception\PageException;
 use Bubu\ExtendHtmlTags\ExtendHtmlTags;
-
+use Bubu\Http\Auth\Authorization\Authorization;
 
 class Page
 {
@@ -12,7 +13,8 @@ class Page
     public string  $pageContent;
     public ?int    $httpCode    = null;
     public ?string $httpMessage = null;
-    public mixed   $pageMessage;
+    public ?int    $pageCode    = null;
+    public mixed   $pageMessage = null;
 
     /**
      * show page
@@ -47,6 +49,9 @@ class Page
 
         $this->pageContent = file_get_contents("templates/{$page}.bubu.php", true);
         $this->pageContent = ExtendHtmlTags::create($this)->pageContent;
+        $message = $this->pageMessage;
+        $code    = $this->pageCode;
+
         ob_start();
         echo eval('?>' . $this->pageContent);
         exit(ob_get_clean());
@@ -86,5 +91,32 @@ class Page
     {
         $this->pageMessage = $pageMessage;
         return $this;
+    }
+
+    /**
+     * pageCode
+     *
+     * @param  int $pageCode
+     * @return self
+     */
+    public function pageCode(mixed $pageCode): self
+    {
+        $this->pageCode = $pageCode;
+        return $this;
+    }
+
+    public function hasAuthorization($authorization): self
+    {
+        Auth::fakeAuth();
+        $id = Auth::getId();
+        if ($id === 0) {
+            (new Page)->httpCode(403)->httpMessage('Access forbidden')->pageMessage('Access forbidden')->pageCode(403)->show('error');
+        }
+        $allowed = Authorization::hasAuthorization($id, $authorization);
+        if ($allowed) {
+            return $this;
+        } else {
+            (new Page)->httpCode(403)->httpMessage('Access forbidden')->pageMessage('Access forbidden')->pageCode(403)->show('error');
+        }
     }
 }
