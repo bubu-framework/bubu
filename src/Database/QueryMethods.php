@@ -118,10 +118,14 @@ trait QueryMethods
             if ($marker !== '?') $marker = ':' . ltrim($marker, ':');
             $condition .= "`{$value[0]}` " . (isset($value[2]) ? "{$value[2]} " : '= ') . "{$marker} AND ";
             if (isset($value[1])) {
+                $i = 0;
+                while (array_key_exists("{$marker}{$i}", $this->values)) {
+                    $i++;
+                }
                 $this->values[
-                    $marker
-                ] = $value[1][key($value[1])];
-            }
+                    "{$marker}{$i}"
+                    ] = $value[1][key($value[1])];
+                }
         }
         $condition = rtrim($condition, ' AND ');
         $condition .= ')';

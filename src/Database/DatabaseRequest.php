@@ -23,7 +23,7 @@ class DatabaseRequest
             $request = Database::setPDO()->prepare($request);
             $i = 1;
             foreach ($values as $key => $value) {
-                if ($key === '?') {
+                if (strpos($key, '?') !== false) {
                     $key = $i;
                 } else {
                     $key = ':' . ltrim($key, ':');
