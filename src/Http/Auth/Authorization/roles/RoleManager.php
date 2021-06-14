@@ -1,23 +1,23 @@
 <?php
 
-namespace Bubu\Http\Auth\Authorization\roles;
+namespace Bubu\Http\Auth\Authorization\Roles;
 
 class RoleManager
 {
 
     private const FILE_PATH = __DIR__ . DIRECTORY_SEPARATOR . 'roles.json';
 
-    public static function getAll(): array
+    public static function allRoles(): array
     {
         return json_decode(file_get_contents(self::FILE_PATH), true);
     }
 
-    public static function getRole(string $role): array
+    public static function role(string $role): array
     {
         return json_decode(file_get_contents(self::FILE_PATH), true)[$role];
     }
 
-    public static function createRole(string $roleName, array $permissions): void
+    public static function create(string $roleName, array $permissions): void
     {
         $roles = json_decode(file_get_contents(self::FILE_PATH), true);
         $roles[$roleName] = $permissions;
@@ -27,7 +27,7 @@ class RoleManager
         );
     }
 
-    public static function removeRole(string $roleName): void
+    public static function remove(string $roleName): void
     {
         $roles = json_decode(file_get_contents(self::FILE_PATH), true);
         unset($roles[$roleName]);
