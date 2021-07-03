@@ -1,4 +1,7 @@
 <?php
+
+use Bubu\Utils\Form\FormTemplate;
+
 $a = '<code>df</code>';
 ?>
 
@@ -21,7 +24,9 @@ $a = '<code>df</code>';
         Hello
     </p>
 </main>
-
+<?php
+    echo FormTemplate::login('/login', 'POST');
+?>
 +include('footer')
 
 </body>

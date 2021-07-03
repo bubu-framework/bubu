@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Views\Page;
+use Bubu\Http\Auth\Authorization\Roles\RoleManager;
 use Bubu\Http\HttpRequire\HttpRequire;
 
 class HomeController
@@ -12,7 +13,7 @@ class HomeController
     public static function create()
     {
         HttpRequire::https();
-        (new Page)->httpCode(101)->httpMessage('Messages super')->show('home');
+        (new Page)->httpCode(101)->httpMessage('Messages super')->hasAuthorization(RoleManager::role('random'))->show('home');
     }
 
     public static function logout()
