@@ -21,7 +21,7 @@ class Csrf
         ];
     }
 
-    public static function check(string $requestData)
+    public static function check(array $requestData)
     {
         try {
             $csrf = Session::get('csrf');
