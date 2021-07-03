@@ -105,8 +105,8 @@ class Flash
                             border-color: {$textColor};
                             background: {$bg};
                         "
-                        onclick="this.remove()"
                     >
+                        <p onclick="this.remove()">&cross;</p>
                         <p>
                             <span style="margin: 0 10px; font-size: 1.5em; vertical-align: sub">{$iconCode}</span>
                             {$messages}
