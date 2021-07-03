@@ -2,11 +2,9 @@
 
 namespace Bubu\Utils\Form;
 
-use Bubu\DevTools\Dump;
 use Bubu\Exception\ShowException;
 use Bubu\Http\Session\Session;
 use Bubu\Http\Session\SessionException;
-use Bubu\Logger\Logger;
 
 class Csrf
 {
@@ -23,7 +21,7 @@ class Csrf
         ];
     }
 
-    public static function check(array $post)
+    public static function check(string $requestData)
     {
         try {
             $csrf = Session::get('csrf');
@@ -31,7 +29,7 @@ class Csrf
             if (is_object($csrf) && get_class($csrf) === SessionException::class) {
                 throw new CsrfException('Invalid CSRF');
             } else {
-                if ($post['csrf'] !== $csrf) {
+                if ($requestData['csrf'] !== $csrf) {
                     throw new CsrfException('Invalid CSRF');
                 } else {
                     return true;
