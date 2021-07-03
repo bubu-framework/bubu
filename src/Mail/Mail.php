@@ -17,9 +17,13 @@ class Mail
         string $to,
         string $subject,
         string $message,
-        string $fromName = $_ENV['FROM_NAME'],
-        string $fromEmail = $_ENV['FROM']
+        string $fromName = 'env',
+        string $fromEmail = 'env'
     ): bool {
+
+        if ($fromName  === 'env') $fromName  = $_ENV['FROM_NAME'];
+        if ($fromEmail === 'env') $fromEmail = $_ENV['FROM'];
+
         $mail = new PHPMailer();
 
         $mail->isSMTP();
