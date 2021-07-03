@@ -2,8 +2,9 @@
 namespace App;
 
 use Bubu\Database\Database;
+use Bubu\Http\Session\Session;
 
-class User extends Database
+class User
 {
     protected $globalAccountInformation;
 
@@ -17,7 +18,7 @@ class User extends Database
      */
     private function setNewAccount(string $username, string $mail, string $password, string $passwordConfirm)
     {
-        $accountNumber =
+        /*$accountNumber =
         self::request(
             'SELECT *
                 FROM `users`
@@ -65,36 +66,37 @@ class User extends Database
                 ]
             );
             return true;
-        }
+        }*/
     }
 
     /**
+     * login
      * @param string $username
      * @param string $password
      * @param bool $keepSession
      * 
      * @return bool|string
      */
-    private function setConnexion(string $username, string $password, bool $keepSession = false)
+    public static function login(string $username, string $password, bool $keepSession = false)
     {
-        $request = self::request(
-            'SELECT `username`, `password`
-            FROM `users`
-            WHERE `username` = :username',
+        $dbData = Database::queryBuilder('users')
+        ->select('id', 'password', 'token')
+        ->where(
             [
-                'username' => $username,
-            ],
-            'fetch'
-        );
+                'username',
+                ['username' => $username]
+            ]
+        )
+        ->fetch();
 
-        if (count($request) === 0) {
+        if ($dbData === false || count($dbData) === 0) {
             return $GLOBALS['lang']['account-not-found'];
-        } elseif (!password_verify($password, $request['password'])) {
+        } elseif (!password_verify($password, $dbData['password'])) {
             return $GLOBALS['lang']['incorrect-password'];
         } else {
-            $this->globalAccountInformation = $request;
+            Session::set('token', $dbData['token']);
             if ($keepSession) {
-                session_set_cookie_params($_ENV['SESSION_DURATION']*60*60*24);
+                Session::changeSessionLifetime($_ENV['SESSION_KEEP_CONNECT']);
             }
             return true;
         }
@@ -113,17 +115,6 @@ class User extends Database
         return $this->setNewAccount($username, $mail, $password, $passwordConfirm);
     }
 
-    /**
-     * @param string $username
-     * @param string $password
-     * @param bool $keepSession
-     * 
-     * @return bool|string
-     */
-    public function getConnexion(string $username, string $password)
-    {
-        return $this->setConnexion($username, $password);
-    }
 
     /**
      * @param string $info
