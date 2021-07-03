@@ -4,14 +4,18 @@ namespace Bubu\Utils\Form\Templates;
 
 use App\User;
 use Bubu\Flash\Flash;
+use Bubu\Utils\Form\Csrf;
 use Bubu\Utils\Form\Form;
 
 class Login
 {
-    public static function login(string $action, string $method): string
-    {
+    public static function login(
+        string $action,
+        string $method,
+        bool $csrf = false
+    ): string {
         $form = new Form();
-        return $form
+        $form
             ->add([
                 'label' => [
                     $form->label->for('username'),
@@ -59,14 +63,18 @@ class Login
                     $form->button->value('Se connecter'),
                     $form->button->name('sendForm')
                 ]
-            ])
-            ->action($action)
+            ]);
+            if ($csrf) $form->csrf();
+            return $form->action($action)
             ->method($method)
             ->build();
     }
 
-    public static function loginVerify(array $requestData): bool
+    public static function loginVerify(array $requestData, bool $csrf = false): bool
     {
+
+        if ($csrf) Csrf::check($requestData);
+
         $return = User::login(
             $requestData['username'],
             $requestData['password'],
