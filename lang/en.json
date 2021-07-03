@@ -8,5 +8,11 @@
     "account-not-found": "Account not found!",
     "incorrect-password": "Incorrect password!",
     "unauthorize": "Access forbidden!",
-    "disconnect": "Disconnect!"
+    "disconnect": "Disconnect!",
+    "ask-username": "Your username",
+    "ask-password":"Your password",
+    "ask-email":"Your email",
+    "ask-keep-connected": "Keep connected ?",
+    "login-button": "Login",
+    "signup-button": "Sign up"
 }

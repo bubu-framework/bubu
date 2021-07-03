@@ -19,7 +19,7 @@ class Login
             ->add([
                 'label' => [
                     $form->label->for('username'),
-                    $form->label->value('Nom d\'utilisateur')
+                    $form->label->value($GLOBALS['lang']['ask-username'])
                 ]
             ])
             ->add([
@@ -27,13 +27,13 @@ class Login
                     $form->input->text,
                     $form->input->name('username'),
                     $form->input->id('username'),
-                    $form->input->placeholder('Votre nom d\'utilisateur')
+                    $form->input->placeholder($GLOBALS['lang']['ask-username'])
                 ]
             ])
             ->add([
                 'label' => [
                     $form->label->for('password'),
-                    $form->label->value('Mot de passe')
+                    $form->label->value($GLOBALS['lang']['ask-password'])
                 ]
             ])
             ->add([
@@ -41,13 +41,13 @@ class Login
                     $form->input->password,
                     $form->input->name('password'),
                     $form->input->id('password'),
-                    $form->input->placeholder('Votre mot de passe')
+                    $form->input->placeholder($GLOBALS['lang']['ask-password'])
                 ]
             ])
             ->add([
                 'label' => [
                     $form->label->for('keepConnect'),
-                    $form->label->value('Rester connecter? ')
+                    $form->label->value($GLOBALS['lang']['ask-keep-connected'])
                 ]
             ])
             ->add([
@@ -60,7 +60,7 @@ class Login
             ->add([
                 'button' => [
                     $form->button->submit,
-                    $form->button->value('Se connecter'),
+                    $form->button->value($GLOBALS['lang']['login-button']),
                     $form->button->name('sendForm')
                 ]
             ]);
