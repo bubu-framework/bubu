@@ -159,9 +159,9 @@ class Form
         return $this;
     }
 
-    public static function checkCsrf(array $post)
+    public static function checkCsrf(array $requestData)
     {
-        return Csrf::check($post);
+        return Csrf::check($requestData);
     }
 
     public function build(): string
