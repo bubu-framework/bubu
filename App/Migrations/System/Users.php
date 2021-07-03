@@ -67,6 +67,11 @@ class Users
                 'columns' => ['email']
             ])
             ->addIndex([
+                'name'    => 'username',
+                'type'    => 'unique',
+                'columns' => ['username']
+            ])
+            ->addIndex([
                 'name'    => 'token',
                 'type'    => 'unique',
                 'columns' => ['token']
