@@ -125,7 +125,8 @@ trait QueryMethods
                     "{$marker}{$i}"
                     ] = $value[1][key($value[1])];
             }
-            $condition .= "`{$value[0]}` " . (isset($value[2]) ? "{$value[2]} " : '= ') . "{$marker}{$i} AND ";
+            if ($marker !== '?') $marker = $marker . $i;
+            $condition .= "`{$value[0]}` " . (isset($value[2]) ? "{$value[2]} " : '= ') . "{$marker} AND ";
         }
         $condition = rtrim($condition, ' AND ');
         $condition .= ')';
