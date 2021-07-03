@@ -1,6 +1,8 @@
 {
     "error": "Erreur",
     "existing-username": "Nom d'utilisateur déjà existant!",
+    "existing-email": "Email déjà existant!",
+    "email-not-verified": "L'email n'a pas été validé!",
     "not-same-password": "Les mots de passe ne correspondent pas!",
     "password-length": "Saisissez un mot de passe entre 10 et 30 caractères!",
     "username-length": "Votre identifiant doit contenir au moins 3 caractères inclus!",

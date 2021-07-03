@@ -80,7 +80,7 @@ class User
     public static function login(string $username, string $password, bool $keepSession = false)
     {
         $dbData = Database::queryBuilder('users')
-        ->select('id', 'password', 'token')
+        ->select('id', 'password', 'email_verified_at', 'token')
         ->where(
             [
                 'username',
@@ -91,6 +91,8 @@ class User
 
         if ($dbData === false || count($dbData) === 0) {
             return $GLOBALS['lang']['account-not-found'];
+        }  elseif (is_null($dbData['email_verified_at'])) {
+            return $GLOBALS['lang']['email-not-verified'];
         } elseif (!password_verify($password, $dbData['password'])) {
             return $GLOBALS['lang']['incorrect-password'];
         } else {
@@ -98,6 +100,54 @@ class User
             if ($keepSession) {
                 Session::changeSessionLifetime($_ENV['SESSION_KEEP_CONNECT']);
             }
+            return true;
+        }
+    }
+
+    /**
+     * signup
+     * @param string $username
+     * @param string $password
+     * @param string $passwordConfirm
+     * @param string $email
+     * 
+     * @return bool|string
+     */
+    public static function signup(
+        string $username,
+        string $password,
+        string $passwordConfirm,
+        string $email
+    ) {
+        $username = Database::queryBuilder('users')
+        ->select('username')
+        ->where(
+            [
+                'username',
+                ['username' => $username]
+            ]
+        )
+        ->fetch();
+
+        $email = Database::queryBuilder('users')
+        ->select('email')
+        ->where(
+            [
+                'email',
+                ['email' => $email]
+            ]
+        )
+        ->fetch();
+
+        if ($username !== false && count($username) !== 0) {
+            return $GLOBALS['lang']['existing-username'];
+        } elseif ($email !== false && count($email) !== 0) {
+            return $GLOBALS['lang']['existing-email'];
+        } elseif (strlen($password) < 10) {
+            return $GLOBALS['lang']['password-length'];
+        } elseif ($password !== $passwordConfirm) {
+            return $GLOBALS['lang']['not-same-password'];
+        } else {
             return true;
         }
     }

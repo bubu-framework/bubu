@@ -1,6 +1,8 @@
 {
     "error": "Error",
     "existing-username": "Username already registre!",
+    "existing-email": "Email already registre!",
+    "email-not-verified": "Email was not verified!",
     "not-same-password": "Password did not match!",
     "password-length": "Your password should be contains between 10 and 30 characters!",
     "username-length": "Your username should be contains minimum 3 characters!",
