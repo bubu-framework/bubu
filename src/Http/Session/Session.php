@@ -8,15 +8,13 @@ class Session
     {
         if (session_status() !== PHP_SESSION_ACTIVE) {
 
-            if (is_null($sessionLifetime)) {
-                $sessionLifetime = $_ENV['SESSION_DURATION'];
-            }
+            if (is_null($sessionLifetime)) $sessionLifetime = $_ENV['SESSION_DURATION'];
 
             ini_set('session.gc_maxlifetime', $sessionLifetime * 60 * 60 * 24);
             session_set_cookie_params($sessionLifetime * 60 * 60 * 24);
-            if (is_null($sessionCache)) {
-                $sessionCache = $_ENV['HTTP_EXPIRES'];
-            }
+
+            if (is_null($sessionCache))  $sessionCache = $_ENV['HTTP_EXPIRES'];
+
             session_cache_expire($sessionCache);
             session_cache_limiter($_ENV['SESSION_CACHE_LIMITER']);
             session_start();
@@ -53,9 +51,7 @@ class Session
     public static function push(string $key, mixed $data): void
     {
         self::start();
-        if (!array_key_exists($key, $_SESSION)) {
-            $_SESSION[$key] = [];
-        }
+        if (!array_key_exists($key, $_SESSION)) $_SESSION[$key] = [];
         $_SESSION[$key] = array_merge_recursive($_SESSION[$key], $data);
     }
 
@@ -65,12 +61,13 @@ class Session
         unset($_SESSION[$key]);
     }
 
-    public function changeSessionLifetime(int $newLifetime)
+    public static function changeSessionLifetime(int $newLifetime)
     {
         $tempSession = $_SESSION;
         $cacheExpire = session_cache_expire();
         self::destroy();
         self::start($cacheExpire, $newLifetime);
+        session_regenerate_id(true);
         $_SESSION = $tempSession;
     }
 
@@ -79,5 +76,6 @@ class Session
         session_reset();
         session_unset();
         session_destroy();
+        setcookie('PHPSESSID', '', 1);
     }
 }
