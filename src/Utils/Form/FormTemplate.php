@@ -25,7 +25,6 @@ class FormTemplate
 
     public static function signupVerify(array $requestData): bool
     {
-        // return Login::loginVerify($requestData);
-        return false;
+        return Signup::signupVerify($requestData);
     }
 }

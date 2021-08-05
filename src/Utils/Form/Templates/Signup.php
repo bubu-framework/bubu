@@ -98,6 +98,8 @@ class Signup
             $requestData['email']
         );
 
+        var_dump($return);
+
         if ($return === true) {
             Flash::valid('Connected');
             return true;

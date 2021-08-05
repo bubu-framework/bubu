@@ -3,6 +3,7 @@ namespace App;
 
 use Bubu\Database\Database;
 use Bubu\Http\Session\Session;
+use Bubu\Mail\Mail;
 
 class User
 {
@@ -119,7 +120,7 @@ class User
         string $passwordConfirm,
         string $email
     ) {
-        $username = Database::queryBuilder('users')
+        $usernameFetch = Database::queryBuilder('users')
         ->select('username')
         ->where(
             [
@@ -129,7 +130,7 @@ class User
         )
         ->fetch();
 
-        $email = Database::queryBuilder('users')
+        $emailFetch = Database::queryBuilder('users')
         ->select('email')
         ->where(
             [
@@ -139,17 +140,49 @@ class User
         )
         ->fetch();
 
-        if ($username !== false && count($username) !== 0) {
+        if ($usernameFetch !== false && count($usernameFetch) !== 0) {
             return $GLOBALS['lang']['existing-username'];
-        } elseif ($email !== false && count($email) !== 0) {
+        } elseif ($emailFetch !== false && count($emailFetch) !== 0) {
             return $GLOBALS['lang']['existing-email'];
         } elseif (strlen($password) < 10) {
             return $GLOBALS['lang']['password-length'];
         } elseif ($password !== $passwordConfirm) {
             return $GLOBALS['lang']['not-same-password'];
-        } else {
-            return true;
         }
+
+        $emailCode = bin2hex(random_bytes(10));
+
+        Database::queryBuilder('users')
+            ->insert([
+                'username' => $username,
+                'email'    => $email,
+                'password' => password_hash($password, constant($_ENV['HASH_ALGO'])),
+                'token'    => bin2hex(random_bytes(30)),
+                'email_verification_code' => $emailCode,
+            ])
+            ->execute();
+
+        Mail::sendMail(
+            $email,
+            'Verification code',
+            <<<HTML
+                <html>
+                    <head>
+                    </head>
+                    <body>
+                        <p>
+                            Follow the link for validate email address 
+                            <a href="{$_SERVER['SERVER_NAME']}/validEmail?code={$emailCode}">
+                               {$_SERVER['SERVER_NAME']}/validEmail?code={$emailCode}
+                            </a>
+                        </p>
+                    </body>
+                </html>
+            HTML
+        );
+
+        return true;
+
     }
 
     /**
