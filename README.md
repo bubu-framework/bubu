@@ -53,3 +53,5 @@ You can change prefix setting in [ExtendHtmlTags](App/ExtendHtmlTags/ExtendHtmlT
 - ### incluable forlder
 
         The incluable folder has not access security, so, don't put sensitives data!
+
+For more, please, read wiki.
