@@ -4,8 +4,221 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "026d6dd121a9966ff0bd337513f31733",
+    "content-hash": "6fd013387801a134526f4088c8ac97ec",
     "packages": [
+        {
+            "name": "bubu-framework/auth",
+            "version": "V1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bubu-framework/auth.git",
+                "reference": "c5c17de25e9a99f2edbe175764b6d0391d7dbdf1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bubu-framework/auth/zipball/c5c17de25e9a99f2edbe175764b6d0391d7dbdf1",
+                "reference": "c5c17de25e9a99f2edbe175764b6d0391d7dbdf1",
+                "shasum": ""
+            },
+            "require": {
+                "bubu-framework/database": "^1.0",
+                "bubu-framework/http": "^1.0",
+                "php": ">=7.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bubu\\Auth\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "QuentinBubu",
+                    "email": "QuentinBubu.dev@gmail.com"
+                }
+            ],
+            "description": "Authentification service for bubu framework",
+            "homepage": "https://github.com/bubu-framework/auth",
+            "support": {
+                "issues": "https://github.com/bubu-framework/auth/issues",
+                "source": "https://github.com/bubu-framework/auth/tree/V1.0.2"
+            },
+            "time": "2021-11-27T11:11:50+00:00"
+        },
+        {
+            "name": "bubu-framework/database",
+            "version": "V1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bubu-framework/database.git",
+                "reference": "6efa8d27d042a17c954f8af6c97228e4fcead00b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bubu-framework/database/zipball/6efa8d27d042a17c954f8af6c97228e4fcead00b",
+                "reference": "6efa8d27d042a17c954f8af6c97228e4fcead00b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.4",
+                "vlucas/phpdotenv": "^5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bubu\\Database\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "QuentinBubu",
+                    "email": "QuentinBubu.dev@gmail.com"
+                }
+            ],
+            "description": "Database communication (bubu framework)",
+            "homepage": "https://github.com/bubu-framework/database",
+            "support": {
+                "issues": "https://github.com/bubu-framework/database/issues",
+                "source": "https://github.com/bubu-framework/database/tree/V1.1.1"
+            },
+            "time": "2021-11-27T16:39:59+00:00"
+        },
+        {
+            "name": "bubu-framework/flash",
+            "version": "V1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bubu-framework/flash.git",
+                "reference": "eee216687b214b0bf6cded299ea6a4763b74a6a1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bubu-framework/flash/zipball/eee216687b214b0bf6cded299ea6a4763b74a6a1",
+                "reference": "eee216687b214b0bf6cded299ea6a4763b74a6a1",
+                "shasum": ""
+            },
+            "require": {
+                "bubu-framework/http": "^1.0",
+                "php": ">=7.4"
+            },
+            "require-dev": {
+                "bubu-framework/http": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bubu\\Flash\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "QuentinBubu",
+                    "email": "QuentinBubu.dev@gmail.com"
+                }
+            ],
+            "description": "Flash message (Bubu Framework)",
+            "homepage": "https://github.com/bubu-framework/flash",
+            "support": {
+                "issues": "https://github.com/bubu-framework/flash/issues",
+                "source": "https://github.com/bubu-framework/flash/tree/V1.0.1"
+            },
+            "time": "2021-11-23T19:59:14+00:00"
+        },
+        {
+            "name": "bubu-framework/http",
+            "version": "V1.0.5.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bubu-framework/http.git",
+                "reference": "ced3343e9893c72a6339ee8315c3489229c2199f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bubu-framework/http/zipball/ced3343e9893c72a6339ee8315c3489229c2199f",
+                "reference": "ced3343e9893c72a6339ee8315c3489229c2199f",
+                "shasum": ""
+            },
+            "require": {
+                "vlucas/phpdotenv": "^5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Bubu\\Http\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "QuentinBubu",
+                    "email": "QuentinBubu.dev@gmail.com"
+                }
+            ],
+            "description": "Http part (bubu framework)",
+            "homepage": "https://github.com/bubu-framework/http",
+            "support": {
+                "issues": "https://github.com/bubu-framework/http/issues",
+                "source": "https://github.com/bubu-framework/http/tree/V1.0.5.1"
+            },
+            "time": "2021-11-28T16:50:23+00:00"
+        },
+        {
+            "name": "bubu-framework/router",
+            "version": "V1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bubu-framework/router.git",
+                "reference": "ccbdc8b6fa3f510bae105319ec65f92f7d12ba5d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bubu-framework/router/zipball/ccbdc8b6fa3f510bae105319ec65f92f7d12ba5d",
+                "reference": "ccbdc8b6fa3f510bae105319ec65f92f7d12ba5d",
+                "shasum": ""
+            },
+            "require": {
+                "bubu-framework/http": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Controller\\": "Controller/",
+                    "Bubu\\Router\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "QuentinBubu",
+                    "email": "QuentinBubu.dev@gmail.com"
+                }
+            ],
+            "description": "Bubu-framework's Router",
+            "homepage": "https://github.com/bubu-framework/router",
+            "support": {
+                "issues": "https://github.com/bubu-framework/router/issues",
+                "source": "https://github.com/bubu-framework/router/tree/V1.0.0"
+            },
+            "time": "2022-06-11T19:51:27+00:00"
+        },
         {
             "name": "graham-campbell/result-type",
             "version": "v1.0.1",
@@ -789,5 +1002,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.3.0"
 }

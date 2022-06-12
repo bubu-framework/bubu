@@ -1,0 +1,18 @@
+@import url('./reset.css');
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    min-height: 100vh;
+}
+
+h1 {
+    text-decoration: underline;
+}
+
+a {
+    color: purple;
+    text-decoration: underline dotted;
+    font-size: 1.2em;
+}
