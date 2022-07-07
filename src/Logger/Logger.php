@@ -2,7 +2,9 @@
 
 namespace Bubu\Logger;
 
+
 use Carbon\Carbon;
+use Bubu\Logger\LoggerException;
 
 class Logger
 {
