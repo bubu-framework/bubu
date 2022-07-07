@@ -1,5 +1,9 @@
 {
+    "name": "bubu-framework/bubu",
+    "type": "project",
+    "license": "MIT",
     "require": {
+        "php": "^8.0.1",
         "vlucas/phpdotenv": "^5.3",
         "nesbot/carbon": "^2.48",
         "bubu-framework/email": "^1.0",
